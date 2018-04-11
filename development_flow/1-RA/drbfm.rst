@@ -1,6 +1,8 @@
 .. index:: DRBFM
     single: RA; DRBFM
 
+.. _DRBFM:
+
 DRBFM
 ================
 
