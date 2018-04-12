@@ -17,6 +17,7 @@ ROM
 ------
 | Read Only Memoryの略
 | ソースコードやテーブルがここに置かれる。
+| 大抵 :ref:`FLASH` で構成されている。
 
 .. index:: RAM
     single: メモリマップ; RAM
