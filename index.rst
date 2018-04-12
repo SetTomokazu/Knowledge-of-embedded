@@ -8,7 +8,7 @@
 
 .. toctree::
     :glob:
-    :maxdepth: 2
+    :maxdepth: 1
 
     */index
 
@@ -16,6 +16,5 @@ Indices and tables
 ==================
 
 * :ref:`genindex`
-* :ref:`modindex`
 * :ref:`search`
 
