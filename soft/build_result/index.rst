@@ -13,8 +13,6 @@
 Float専門のプロセッサあり？FPU
 
 
-
-
 .. toctree::
     :glob:
     :maxdepth: 1
