@@ -1,15 +1,15 @@
-.. index:: メモリマップ
+.. index:: Memory Map
 
-.. _メモリマップ:
+.. _Memory Map:
 
-メモリマップ
+Memory Map
 =============
-| マイコンにはそのビット数で把握できるメモリマップが存在する。
+| マイコンにはそのビット数で把握できるMemory Mapが存在する。
 | マイコンでアクセスできる領域は大別して以下の通りである。
 | それ以外は予約領域である。
 
 .. index:: ROM
-    single: メモリマップ; ROM
+    single: Memory Map; ROM
 
 .. _ROM:
 
@@ -20,7 +20,7 @@ ROM
 | 大抵 :ref:`FLASH` で構成されている。
 
 .. index:: RAM
-    single: メモリマップ; RAM
+    single: Memory Map; RAM
 
 .. _RAM:
 

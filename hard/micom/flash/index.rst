@@ -11,13 +11,14 @@ FLASH
 * 内容のクリア、書き込みが可能なモード。この状態の時はプログラムは実行できない。
 
 
-.. index:: セクタ
-    single: FLASH; セクタ
+.. index:: Sector
+    single: FLASH; Sector
 
-.. _セクタ:
+.. _Sector:
 
-セクタ
+Sector
 ----------
+| セクタ。
 | 広い :ref:`FLASH` をある程度制御しやすいように分割した領域のこと
 | 基本的にこのセクタ単位で :ref:`FLASH` の消去、書き込みを行う。
 

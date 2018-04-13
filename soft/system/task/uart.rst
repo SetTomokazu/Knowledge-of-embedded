@@ -1,5 +1,5 @@
 .. index:: UART通信制御タスク
-    single: タスク; UART通信制御タスク
+    single: Task; UART通信制御タスク
 
 .. _UART通信制御タスク:
 

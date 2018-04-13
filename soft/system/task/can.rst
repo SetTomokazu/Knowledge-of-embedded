@@ -1,5 +1,5 @@
 .. index:: CAN通信制御タスク
-    single: タスク; CAN通信制御タスク
+    single: Task; CAN通信制御タスク
 
 .. _CAN通信制御タスク:
 
