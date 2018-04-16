@@ -33,4 +33,22 @@ Endian
     #endif
     } bit_t;
 
+.. code-block:: c
+
+    void parse_message(unsigned char *msg) {
+        unsigned int tmp = 0;
+        tmp =
+    #ifdef __BIG_ENDIAN__
+            msg[3] << 24 |
+            msg[4] << 16 |
+            msg[5] <<  8 |
+            msg[6];
+    #else
+            msg[6] << 24 |
+            msg[5] << 16 |
+            msg[4] <<  8 |
+            msg[3];
+    #endif
+    }
+
 .. note:: 決して「なんじゃこりゃあ！？」とか言って消さないように
