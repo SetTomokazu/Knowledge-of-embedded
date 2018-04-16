@@ -5,9 +5,30 @@
 
 概要
 ------
-| 単純に必要なデータのみを通信でやり取りした場合、受け取ったデータが果たして何なのかが判別がつかない。
+| 例えば、スイッチが押されている状態を通信で伝達する場合を考える。
+| 押されている状態を1、押されていない状態を0とする。
+| スイッチが一つしかないならば単に1と0のみを送ればいい。
+| 受信側もそれしか来ないと分かっていれば意味を理解できる。
+| しかし、複数のスイッチがあった場合、受信した1がどのスイッチのものかが判別できない。
 | その為、データに定型のヘッダを付け、ヘッダ内に何のデータかを示すことで相互理解を行う。
 | 構造の例を以下に示す。
+
+.. code-block:: c
+
+    /* sizeof(external_message_t) <= INT_MESSAGE_MAX_LENGTH */
+    typedef struct {
+        unsigned char id;       /* メッセージ種別   */
+        unsigned char length;   /* メッセージ長     */
+        unsigned char from;     /* メッセージ送信元 */
+        unsigned char to;       /* メッセージ送信先 */
+        unsigned char data[INT_MESSAGE_MAX_LENGTH];
+    } internal_message_t;
+
+    typedef struct {
+        unsigned char id;
+        unsigned char length;
+        unsigned char data[EXT_MESSAGE_MAX_LENGTH]
+    } external_message_t;
 
 +-------------------------+
 |メッセージ構造           |
