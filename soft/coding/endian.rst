@@ -39,15 +39,15 @@ Endian
         unsigned int tmp = 0;
         tmp =
     #ifdef __BIG_ENDIAN__
-            msg[3] << 24 |
-            msg[4] << 16 |
-            msg[5] <<  8 |
-            msg[6];
+            (unsigned int)msg[3] << 24 |
+            (unsigned int)msg[4] << 16 |
+            (unsigned int)msg[5] <<  8 |
+            (unsigned int)msg[6];
     #else
-            msg[6] << 24 |
-            msg[5] << 16 |
-            msg[4] <<  8 |
-            msg[3];
+            (unsigned int)msg[6] << 24 |
+            (unsigned int)msg[5] << 16 |
+            (unsigned int)msg[4] <<  8 |
+            (unsigned int)msg[3];
     #endif
     }
 
