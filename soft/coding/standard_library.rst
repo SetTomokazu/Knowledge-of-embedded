@@ -24,8 +24,21 @@ memset,memcpy,memcmp
 | が、内部の動作が非常に怪しいと専らの噂である。
 | 一番の問題は「サイズが4の倍数でない場合、端数はどのように計算されるのだろうか」である。
 | CPUとしてはint型である4byteでデータ取得や比較を行った方が動作が速い
-| その為例えば
+| その為、以下のような中身だった場合、不具合が起こり得る。
 
+.. code-block:: c
+
+    void *memcpy(void *dst, const void *src, unsigned n) {
+        unsigned i;
+        unsigned int *d = dst;
+        unsigned int *s = src;
+
+        for(i = 0; i < n; i +=4) {
+            *(dst++) = *(src++);
+        }
+    }
+
+| これで引数nが5の場合、0～4byte目まではいいが、5～7byte目は
 
 .. index:: sizeof
 
