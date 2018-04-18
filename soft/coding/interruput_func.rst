@@ -24,5 +24,4 @@
     /* 独自の型による指定 */
     _interrupt void interruput_func(void) { ... }
 
-.. note::
-    割り込み関数は他の通常関数や割り込み関数からCallしてはいけない！！！！
+.. warning:: 割り込み関数は他の通常関数や割り込み関数からCallしてはいけない！！！！
