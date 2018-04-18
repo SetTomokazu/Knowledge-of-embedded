@@ -308,3 +308,23 @@ texinfo_documents = [
 
 # If true, do not generate a @detailmenu in the "Top" node's menu.
 #texinfo_no_detailmenu = False
+
+def zip_folder(target_folder):
+    import os
+    import zipfile
+    print target_folder
+    with zipfile.ZipFile( target_folder + '.zip','w') as myzip:
+        for folder, subfolders, files in os.walk(target_folder):
+            myzip.write(folder)
+            for file in files:
+                myzip.write(os.path.join(folder,file))
+
+def setup(app):
+    """ サンプルソース置き場を決めて、各プロジェクトのzipファイルを毎回作る """
+    import os
+    target_folder = './sample_source'
+    for folder, subfolders, files in os.walk(target_folder):
+        if folder != target_folder:
+            continue
+        for f in subfolders:
+            zip_folder(os.path.join(folder, f))

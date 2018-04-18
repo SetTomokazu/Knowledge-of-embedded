@@ -1,0 +1,10 @@
+[Settings]
+ExeName=
+Options=-v
+Arguments=
+Make Option=-a -c
+File000=.\Scheduler.c
+File001=.\TaskA.c
+File002=.\TaskB.c
+Count=3
+Make Clean=1
