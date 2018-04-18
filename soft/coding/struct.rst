@@ -1,14 +1,14 @@
-.. index:: struct
+.. index:: struct, 構造体
 
 .. _struct:
 
-struct
+struct(構造体)
 ============================
 | いつもの構造体
 | 基本的には定義にはtypedefを使うことがコーディング規約で推奨されている。
 
 
-.. index:: Bit field
+.. index:: Bit field, ビットフィールド
 
 .. _Bit field:
 

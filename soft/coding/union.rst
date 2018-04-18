@@ -1,10 +1,10 @@
 
-.. index:: union
+.. index:: union, 共用体
 
 .. _union:
 
-union
-==========
+union(共用体)
+================
 | 研修でこれ一体何がしたいんだと思ったunionは :ref:`Bit field` で大活躍する。
 | :ref:`Bit field` の各ビットの値を、バイト単位で初期化をしたい場合等、
 | アクセス用のメンバをunionで共存させてしまえばいい。
