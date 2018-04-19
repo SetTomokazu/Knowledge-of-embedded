@@ -61,19 +61,15 @@ Interruput Priority(割り込み優先度)
 .. seqdiag::
 
     seqdiag {
-        Common; High_Priority_Interrupt; Low_Priority_Interrupt;
-        Common => Low_Priority_Interrupt;
-
-        Common => High_Priority_Interrupt;
-
-        Common => Low_Priority_Interrupt {
-            Low_Priority_Interrupt => High_Priority_Interrupt;
+        common[label = "Common"];
+        high[label = "High Priority\nInterrupt"];
+        low[label = "Low Priority\nInterrupt"];
+        common => low;
+        common => high;
+        common => low {
+            low => high;
         }
-
     }
-
-
-
 
 .. index:: Mask
 
@@ -83,7 +79,9 @@ Mask
 ============================
 | 覆い隠す事。
 | 大抵組み込みでは割り込みに対して使用する言葉
-|
+| Maskすることで、Mask中は該当する割り込みは実行を待機することになる。
+| :ref:`Priority` のレベルを指定する事で、そのレベル以下の割り込みのみをMaskすることもできる。
+
 
 .. index:: NMI
 
@@ -92,6 +90,8 @@ Mask
 NMI
 ============================
 | Non Maskable Interrupt
+| :ref:`Priority` が最も高く、 :ref:`Mask` 不可能な割り込みの事。
+| まあ、 :ref:`Reset` の事である。
 
 .. index:: Reset
 
@@ -99,7 +99,9 @@ NMI
 
 Reset
 ============================
-|
+| マイコンの動作を全て初期状態に戻す為の割り込みの事。
+| 外部Watckdogが居る場合、大抵この割り込み端子を制御させることになる。
+
 
 .. index:: 例外
 
