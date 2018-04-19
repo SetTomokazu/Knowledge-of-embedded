@@ -312,7 +312,6 @@ texinfo_documents = [
 def zip_folder(target_folder):
     import os
     import zipfile
-    print target_folder
     with zipfile.ZipFile( target_folder + '.zip','w') as myzip:
         for folder, subfolders, files in os.walk(target_folder):
             myzip.write(folder)
