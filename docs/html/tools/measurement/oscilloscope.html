@@ -1,0 +1,230 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <title>オシロスコープ &#8212; KnowledgeOfEmbedded 0.0.1 ドキュメント</title>
+    <link rel="stylesheet" href="../../_static/agogo.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../_static/translations.js"></script>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="検索" href="../../search.html" />
+    <link rel="prev" title="測定機器" href="index.html" /> 
+  </head><body>
+    <div class="header-wrapper" role="banner">
+      <div class="header">
+        <div class="headertitle"><a
+          href="../../index.html">KnowledgeOfEmbedded 0.0.1 ドキュメント</a></div>
+        <div class="rel" role="navigation" aria-label="related navigation">
+          <a href="index.html" title="測定機器"
+             accesskey="P">前へ</a> |
+          <a href="../../genindex.html" title="総合索引"
+             accesskey="I">索引</a>
+        </div>
+       </div>
+    </div>
+
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="document">
+            
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="id1">
+<span id="index-0"></span><span id="id2"></span><h1>オシロスコープ<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="line-block">
+<div class="line">組み込みで測定をするといえばオシロスコープである。</div>
+</div>
+<div class="section" id="id3">
+<h2>目的<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="line-block">
+<div class="line">オシロスコープの本分は時間測定である。</div>
+<div class="line">制御するタイミングや組み合わせなどを実機で見るために使用する。</div>
+<div class="line"><a class="reference internal" href="../../soft/environment/debugger.html#break"><span class="std std-ref">Break</span></a> で制御できるのはデバッグ中のマイコンだけであり、</div>
+<div class="line">通信相手の制御線までは停止できない為、波形で時間を切り取るわけである。</div>
+</div>
+</div>
+<div class="section" id="id4">
+<h2>主な使い方<a class="headerlink" href="#id4" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<ol class="arabic">
+<li><p>測定対象の基盤の電源を落とす。</p>
+<blockquote>
+<div><div class="admonition warning">
+<p class="admonition-title">警告</p>
+<div class="line-block">
+<div class="line">絶対に電源が入ったままでプローブの接続等を行わない事。</div>
+<div class="line"><strong>最悪の場合基盤が発火して二度と使えなくなる。</strong></div>
+</div>
+</div>
+</div></blockquote>
+</li>
+<li><p>電源を入れプローブを接続する。</p></li>
+<li><div class="line-block">
+<div class="line">プローブの先端を基盤上の測定箇所に、プローブのGNDを基盤の端っこらへんにあるGNDに接続する。</div>
+<div class="line">出来ない場合は線出しやワニ口クリップ等を使用する。何が何でも接続する。</div>
+</div>
+<blockquote>
+<div><div class="admonition warning">
+<p class="admonition-title">警告</p>
+<div class="line-block">
+<div class="line">隣の線や端子に接触しないように注意すること。</div>
+<div class="line"><strong>最悪の場合基盤が発火して二度と使えなくなる。</strong></div>
+</div>
+</div>
+</div></blockquote>
+</li>
+<li><p>基盤の電源を入れ、測定対象の波形を取得する。</p></li>
+<li><dl>
+<dt>表示画面のスクリーンショットを保存する。</dt><dd><div class="admonition note">
+<p class="admonition-title">注釈</p>
+<div class="line-block">
+<div class="line">可能ならば各波形の表示名を変更しておく。</div>
+<div class="line">後で大量の画像を整理する際にどれがどれか分からなくなる為。</div>
+</div>
+</div>
+</dd>
+</dl>
+</li>
+<li><div class="line-block">
+<div class="line">試験項目結果が正しいことを波形のどの部分が示しているかが分かるようにする。</div>
+<div class="line">画像上に矢印や注釈を重ねることで分かり易くする。</div>
+</div>
+</li>
+</ol>
+</div>
+<div class="section" id="id5">
+<h2>基本機能<a class="headerlink" href="#id5" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="section" id="trigger">
+<h3>Trigger<a class="headerlink" href="#trigger" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="line-block">
+<div class="line">波形の変化を指定し、その条件を満たした波形を取得する。</div>
+<div class="line">いつ来るか分からない条件文の中身と、その時の状況を知る為に多用する。</div>
+<div class="line">目的の個所で端子を叩き、その端子が変化した個所を見ることで発生条件を観察するといった使い方をする。</div>
+</div>
+</div>
+<div class="section" id="single">
+<h3>Single<a class="headerlink" href="#single" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="line-block">
+<div class="line">Triggerはその条件が来るたびに最新の波形を表示し続けるが、</div>
+<div class="line">こちらは最初の一発目だけを表示する。</div>
+</div>
+</div>
+<div class="section" id="history">
+<h3>History<a class="headerlink" href="#history" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="line-block">
+<div class="line">Triggerで何度も引っかかった履歴を閲覧できる機能</div>
+<div class="line">ただ、保存容量の上限がある為、サンプリング数と履歴数が反比例する。</div>
+</div>
+</div>
+<div class="section" id="measure">
+<h3>Measure<a class="headerlink" href="#measure" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="line-block">
+<div class="line">現在表示している波形について、2つのカーソルで測定範囲を決め、その間にある情報を表示する。</div>
+<div class="line">表示できる項目は山程あるが、どうせ使用するのは以下くらいである。</div>
+</div>
+<ul class="simple">
+<li><dl class="simple">
+<dt>+Width, -Width</dt><dd><p>+Widthが <a class="reference internal" href="../../glossary/embedded.html#high"><span class="std std-ref">High</span></a> の時の時間、-が <a class="reference internal" href="../../glossary/embedded.html#low"><span class="std std-ref">Low</span></a> の時の時間</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Duty(デューティ)</dt><dd><p>一周期の <a class="reference internal" href="../../glossary/embedded.html#high"><span class="std std-ref">High</span></a> 幅と <a class="reference internal" href="../../glossary/embedded.html#low"><span class="std std-ref">Low</span></a> 幅の比率</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Period, Average Period</dt><dd><p>波長。一周期にかかる時間</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Frequency, Average Frequency</dt><dd><p>周波数</p>
+</dd>
+</dl>
+</li>
+</ul>
+</div>
+<div class="section" id="scope">
+<h3>Scope<a class="headerlink" href="#scope" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="line-block">
+<div class="line">波形の一部を拡大して表示する。</div>
+<div class="line">どこまで拡大できるかというか頑張って拡大したものに意味があるかどうかはサンプリングレート次第</div>
+</div>
+</div>
+<div class="section" id="cursol">
+<h3>Cursol<a class="headerlink" href="#cursol" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="line-block">
+<div class="line">カーソルを2本表示し、カーソル同士の間の時間やカーソル位置の電圧を表示する。</div>
+<div class="line">一つ目の波形が <a class="reference internal" href="../../glossary/embedded.html#high"><span class="std std-ref">High</span></a> になってから二つ目の波形が <a class="reference internal" href="../../glossary/embedded.html#high"><span class="std std-ref">High</span></a> になるまでの時間と言ったものを測定するために使用する。</div>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+        </div>
+        <div class="sidebar">
+          
+          <h3>目次</h3>
+          <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../development_flow/index.html">開発の流れ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../glossary/index.html">用語集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../hard/index.html">ハード</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../soft/index.html">ソフト</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Tools</a></li>
+</ul>
+
+          <div role="search">
+            <h3 style="margin-top: 1.5em;">検索</h3>
+            <form class="search" action="../../search.html" method="get">
+                <input type="text" name="q" />
+                <input type="submit" value="検索" />
+            </form>
+          </div>
+
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          <div role="navigation" aria-label="related navigaton">
+            <a href="index.html" title="測定機器"
+              >前へ</a> |
+            <a href="../../genindex.html" title="総合索引"
+              >索引</a>
+          </div>
+          <div role="note" aria-label="source link">
+              <br/>
+              <a href="../../_sources/tools/measurement/oscilloscope.rst.txt"
+                rel="nofollow">ソースコードを表示</a>
+          </div>
+        </div>
+
+        <div class="right">
+          
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, TCS_Himeji.
+      このドキュメントは <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.4 で生成しました。
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+  </body>
+</html>

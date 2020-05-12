@@ -1,0 +1,137 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <title>サーミスタ &#8212; KnowledgeOfEmbedded 0.0.1 ドキュメント</title>
+    <link rel="stylesheet" href="../../_static/agogo.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../_static/translations.js"></script>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="検索" href="../../search.html" />
+    <link rel="next" title="Watchdog" href="watchdog.html" />
+    <link rel="prev" title="EEPROM" href="eeprom.html" /> 
+  </head><body>
+    <div class="header-wrapper" role="banner">
+      <div class="header">
+        <div class="headertitle"><a
+          href="../../index.html">KnowledgeOfEmbedded 0.0.1 ドキュメント</a></div>
+        <div class="rel" role="navigation" aria-label="related navigation">
+          <a href="eeprom.html" title="EEPROM"
+             accesskey="P">前へ</a> |
+          <a href="watchdog.html" title="Watchdog"
+             accesskey="N">次へ</a> |
+          <a href="../../genindex.html" title="総合索引"
+             accesskey="I">索引</a>
+        </div>
+       </div>
+    </div>
+
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="document">
+            
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <span class="target" id="index-0"></span><div class="section" id="id1">
+<span id="index-1"></span><span id="id2"></span><h1>サーミスタ<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="line-block">
+<div class="line">周囲の温度を計測するデバイス。</div>
+<div class="line">温度センサとも。</div>
+</div>
+<div class="section" id="id3">
+<h2>特性<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="../../glossary/adc.html#ad"><span class="std std-ref">AD変換</span></a> のように温度をデジタル値に変換する。</div>
+<div class="line">測定した温度は <a class="reference internal" href="../../glossary/i2c.html#i2c"><span class="std std-ref">I2C通信</span></a> で読みだす事が出来る。</div>
+<div class="line">また、状態を通知するために  <a class="reference internal" href="../../glossary/i2c.html#i2c"><span class="std std-ref">I2C通信</span></a> 用の線だけでなく通知用の出力端子を備えており、</div>
+<div class="line">指定した温度を超えた場合出力端子の値を変更する。</div>
+<div class="line">これにより <a class="reference internal" href="../../glossary/i2c.html#i2c"><span class="std std-ref">I2C通信</span></a> で毎回値を読みに行かなくても危険域かどうかを知ることができる。</div>
+</div>
+</div>
+<div class="section" id="id4">
+<h2>用途<a class="headerlink" href="#id4" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="line-block">
+<div class="line">基盤やマイコンの発熱温度を測定する。</div>
+<div class="line">温度が上がりすぎたら暴走や破損の恐れがある為、それを検知して回避するために用いられる。</div>
+</div>
+</div>
+<div class="section" id="id5">
+<h2>運用<a class="headerlink" href="#id5" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<ul class="simple">
+<li><p>起動時に初期化を行う。</p></li>
+<li><p>出力端子制御温度を指定する。</p></li>
+<li><p>検知を開始させる。</p></li>
+<li><p>後は適当に出力端子をポーリングする。</p></li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+        </div>
+        <div class="sidebar">
+          
+          <h3>目次</h3>
+          <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../development_flow/index.html">開発の流れ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../glossary/index.html">用語集</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">ハード</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../soft/index.html">ソフト</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tools/index.html">Tools</a></li>
+</ul>
+
+          <div role="search">
+            <h3 style="margin-top: 1.5em;">検索</h3>
+            <form class="search" action="../../search.html" method="get">
+                <input type="text" name="q" />
+                <input type="submit" value="検索" />
+            </form>
+          </div>
+
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          <div role="navigation" aria-label="related navigaton">
+            <a href="eeprom.html" title="EEPROM"
+              >前へ</a> |
+            <a href="watchdog.html" title="Watchdog"
+              >次へ</a> |
+            <a href="../../genindex.html" title="総合索引"
+              >索引</a>
+          </div>
+          <div role="note" aria-label="source link">
+              <br/>
+              <a href="../../_sources/hard/device/thermistor.rst.txt"
+                rel="nofollow">ソースコードを表示</a>
+          </div>
+        </div>
+
+        <div class="right">
+          
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, TCS_Himeji.
+      このドキュメントは <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.4 で生成しました。
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+  </body>
+</html>

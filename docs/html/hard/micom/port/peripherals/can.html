@@ -1,0 +1,141 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <title>CAN通信制御レジスタ &#8212; KnowledgeOfEmbedded 0.0.1 ドキュメント</title>
+    <link rel="stylesheet" href="../../../../_static/agogo.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+    <script src="../../../../_static/jquery.js"></script>
+    <script src="../../../../_static/underscore.js"></script>
+    <script src="../../../../_static/doctools.js"></script>
+    <script src="../../../../_static/language_data.js"></script>
+    <script src="../../../../_static/translations.js"></script>
+    <link rel="index" title="索引" href="../../../../genindex.html" />
+    <link rel="search" title="検索" href="../../../../search.html" />
+    <link rel="next" title="UART通信制御レジスタ" href="uart.html" />
+    <link rel="prev" title="ADC制御レジスタ" href="adc.html" /> 
+  </head><body>
+    <div class="header-wrapper" role="banner">
+      <div class="header">
+        <div class="headertitle"><a
+          href="../../../../index.html">KnowledgeOfEmbedded 0.0.1 ドキュメント</a></div>
+        <div class="rel" role="navigation" aria-label="related navigation">
+          <a href="adc.html" title="ADC制御レジスタ"
+             accesskey="P">前へ</a> |
+          <a href="uart.html" title="UART通信制御レジスタ"
+             accesskey="N">次へ</a> |
+          <a href="../../../../genindex.html" title="総合索引"
+             accesskey="I">索引</a>
+        </div>
+       </div>
+    </div>
+
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="document">
+            
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="can">
+<span id="index-0"></span><span id="id1"></span><h1>CAN通信制御レジスタ<a class="headerlink" href="#can" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="../../../../glossary/can.html#can"><span class="std std-ref">CAN通信</span></a> を行う為のレジスタ</div>
+<div class="line">レジスタ一覧を見ればわかると思うが、</div>
+<div class="line"><a class="reference internal" href="uart.html#uart"><span class="std std-ref">UART通信制御レジスタ</span></a> 等と異なり非常に多くの事をやってくれる。</div>
+</div>
+<div class="section" id="id2">
+<h2>レジスタ一覧<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="line-block">
+<div class="line">レジスタのイメージとしては集合住宅よろしくCANID別にポストがあると思えばいい。</div>
+<div class="line">何か新しくメッセージを受信すればポストに入っているし、</div>
+<div class="line">逆に送信するときは入れておけば勝手に送ってくれる。</div>
+</div>
+<div class="section" id="id3">
+<h3>CANメッセージ情報レジスタ<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="line-block">
+<div class="line">つまりはポストの中に入っているメッセージの詳細を設定するレジスタ。</div>
+<div class="line">使用するCANIDとその送受信方向、一定周期なのかイベントなのかを指定する。</div>
+</div>
+</div>
+<div class="section" id="id4">
+<h3>CANメッセージデータレジスタ<a class="headerlink" href="#id4" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="line-block">
+<div class="line">ポストの中身を指定、または受信した内容が保存されているレジスタ。</div>
+<div class="line">受信完了割り込みがあれば見に行けばよい。</div>
+</div>
+</div>
+<div class="section" id="id5">
+<h3>CAN状態レジスタ<a class="headerlink" href="#id5" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="line-block">
+<div class="line">CAN通信の状態を格納しているレジスタ。</div>
+<div class="line">送受信状態やエラー状態がある。</div>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+        </div>
+        <div class="sidebar">
+          
+          <h3>目次</h3>
+          <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../../development_flow/index.html">開発の流れ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../glossary/index.html">用語集</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../index.html">ハード</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../soft/index.html">ソフト</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tools/index.html">Tools</a></li>
+</ul>
+
+          <div role="search">
+            <h3 style="margin-top: 1.5em;">検索</h3>
+            <form class="search" action="../../../../search.html" method="get">
+                <input type="text" name="q" />
+                <input type="submit" value="検索" />
+            </form>
+          </div>
+
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          <div role="navigation" aria-label="related navigaton">
+            <a href="adc.html" title="ADC制御レジスタ"
+              >前へ</a> |
+            <a href="uart.html" title="UART通信制御レジスタ"
+              >次へ</a> |
+            <a href="../../../../genindex.html" title="総合索引"
+              >索引</a>
+          </div>
+          <div role="note" aria-label="source link">
+              <br/>
+              <a href="../../../../_sources/hard/micom/port/peripherals/can.rst.txt"
+                rel="nofollow">ソースコードを表示</a>
+          </div>
+        </div>
+
+        <div class="right">
+          
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, TCS_Himeji.
+      このドキュメントは <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.4 で生成しました。
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+  </body>
+</html>

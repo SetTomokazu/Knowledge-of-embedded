@@ -1,0 +1,576 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <title>状態遷移表 &#8212; KnowledgeOfEmbedded 0.0.1 ドキュメント</title>
+    <link rel="stylesheet" href="../../_static/agogo.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../_static/translations.js"></script>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="検索" href="../../search.html" />
+    <link rel="next" title="【MK】コーディング" href="../3-MK/index.html" />
+    <link rel="prev" title="シーケンス図" href="sequence.html" /> 
+  </head><body>
+    <div class="header-wrapper" role="banner">
+      <div class="header">
+        <div class="headertitle"><a
+          href="../../index.html">KnowledgeOfEmbedded 0.0.1 ドキュメント</a></div>
+        <div class="rel" role="navigation" aria-label="related navigation">
+          <a href="sequence.html" title="シーケンス図"
+             accesskey="P">前へ</a> |
+          <a href="../3-MK/index.html" title="【MK】コーディング"
+             accesskey="N">次へ</a> |
+          <a href="../../genindex.html" title="総合索引"
+             accesskey="I">索引</a>
+        </div>
+       </div>
+    </div>
+
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="document">
+            
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="id1">
+<span id="index-0"></span><span id="id2"></span><h1>状態遷移表<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="line-block">
+<div class="line">何かと作成する図の一つ</div>
+</div>
+<div class="section" id="id3">
+<h2>概要<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="line-block">
+<div class="line">何かがあった時にこれをする。といった仕様を表に纏めることで検討漏れをなくす手法の一つ。</div>
+<div class="line">設計においてこれが作れれば後は消化試合のようなものである。</div>
+</div>
+</div>
+<div class="section" id="id4">
+<h2>目的<a class="headerlink" href="#id4" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="line-block">
+<div class="line">変更、追加する処理に関して、一定のシーケンスがある場合や他との連携や競合を考える必要がある場合に</div>
+<div class="line">起こり得る全てを列挙しそれらへの対応を決定する為に作成する。</div>
+<div class="line">例えば異常検知を一つ追加した場合に、ざっと以下の事が考えられる。</div>
+</div>
+<ul class="simple">
+<li><p>他の異常検知と同時に発生した場合どちらを優先させるのか。</p></li>
+<li><p>他の異常検知が発生しフェールや復帰処理中の場合は本検知は行うのか。</p></li>
+<li><p>本検知でのフェール実行中に既存の異常検知が発生した場合、制御はどうするのか。</p></li>
+</ul>
+<div class="line-block">
+<div class="line">基本的に変更、追加にてバグが発生する場合とはこれらの事を網羅しきれていない場合が大半であり、</div>
+<div class="line">それを未然に防ぐ為には最初に起こりそうな事象を全て網羅する必要がある。</div>
+<div class="line">状態遷移表はそれに対して非常に有用な手段である。</div>
+</div>
+</div>
+<div class="section" id="id5">
+<h2>作成方法<a class="headerlink" href="#id5" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="line-block">
+<div class="line">仕様や母体のソフトからあり得る状態と、起こり得るイベントを全て書き出す。</div>
+<div class="line">そして、表の縦軸に状態を、横軸にイベントを並べる。</div>
+</div>
+<div class="line-block">
+<div class="line">この時、状態とイベントに寄って示されるセルには単一の事象しか存在しないようにすること。</div>
+<div class="line">例えば以下のような仕様があったとする。</div>
+</div>
+<ul class="simple">
+<li><p>電源を付けると起動する。消すと終了する。</p></li>
+<li><dl class="simple">
+<dt>異常を検知すると再起動する。</dt><dd><p>但し電源を付けたままで異常が3回発生した場合は動作を停止した状態で何もしないようにする。</p>
+</dd>
+</dl>
+</li>
+</ul>
+<div class="line-block">
+<div class="line"><br /></div>
+<div class="line">以下の表は駄目な例である。</div>
+</div>
+<table class="colwidths-given docutils align-default" id="id7">
+<caption><span class="caption-text"><strong>【状態遷移図】駄目な例</strong></span><a class="headerlink" href="#id7" title="このテーブルへのパーマリンク">¶</a></caption>
+<colgroup>
+<col style="width: 4%" />
+<col style="width: 17%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 45%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head stub"><div class="line-block">
+<div class="line"><strong>項番</strong></div>
+</div>
+</th>
+<th class="head stub"><div class="line-block">
+<div class="line"><strong>状態名</strong></div>
+</div>
+</th>
+<th class="head"><div class="line-block">
+<div class="line"><strong>イベント1</strong></div>
+<div class="line">優先度高</div>
+<div class="line">電源ON</div>
+</div>
+</th>
+<th class="head"><div class="line-block">
+<div class="line"><strong>イベント2</strong></div>
+<div class="line">優先度高</div>
+<div class="line">電源OFF</div>
+</div>
+</th>
+<th class="head"><div class="line-block">
+<div class="line"><strong>イベント3</strong></div>
+<div class="line">優先度中</div>
+<div class="line">異常発生</div>
+</div>
+</th>
+<th class="head"><div class="line-block">
+<div class="line"><strong>イベント4</strong></div>
+<div class="line">優先度低</div>
+<div class="line">タイムアウト</div>
+</div>
+</th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><th class="stub"><p>1</p></th>
+<th class="stub"><p>初期状態</p></th>
+<td><div class="line-block">
+<div class="line">項番2へ</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">-</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">-</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">-</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><th class="stub"><p>2</p></th>
+<th class="stub"><p>起動中</p></th>
+<td><div class="line-block">
+<div class="line">-</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">-</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">項番4へ</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">項番3へ</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><th class="stub"><p>3</p></th>
+<th class="stub"><p>定常稼動中</p></th>
+<td><div class="line-block">
+<div class="line">-</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">項番6へ</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">項番4へ</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">-</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><th class="stub"><p>4</p></th>
+<th class="stub"><p>異常終了中</p></th>
+<td><div class="line-block">
+<div class="line">-</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">項番6へ</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">-</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line"><strong>異常発生回数が3回未満の場合項番2へ</strong></div>
+<div class="line"><strong>異常発生回数が3回以上の場合項番5へ</strong></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><th class="stub"><p>5</p></th>
+<th class="stub"><p>異常停止中</p></th>
+<td><div class="line-block">
+<div class="line">-</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">項番1へ</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">-</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">-</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><th class="stub"><p>6</p></th>
+<th class="stub"><p>終了中</p></th>
+<td><div class="line-block">
+<div class="line">-</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">-</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">-</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">項番1へ</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="line-block">
+<div class="line">この場合、太字で表現したセル内において、単一セル内に条件分岐が存在する。</div>
+<div class="line">これをすると項目の洗い出しに不備が生じる可能性がある。</div>
+<div class="line">たとえここだけでしか分岐しないと明確であっても、きちんと状態を分割する必要がある。</div>
+<div class="line">また、登場するバッファについても記述しておくことで制御タイミング起因の不具合を防止する事が出来る。</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<div class="line-block">
+<div class="line">必要なのは毒も食らわば皿まで精神である。</div>
+<div class="line">しつこいくらいに全部書くことが大切である。</div>
+</div>
+</div>
+<table class="colwidths-given docutils align-default" id="id8">
+<caption><span class="caption-text"><strong>【状態遷移図】マシな例</strong></span><a class="headerlink" href="#id8" title="このテーブルへのパーマリンク">¶</a></caption>
+<colgroup>
+<col style="width: 3%" />
+<col style="width: 12%" />
+<col style="width: 8%" />
+<col style="width: 19%" />
+<col style="width: 19%" />
+<col style="width: 19%" />
+<col style="width: 19%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head stub"><div class="line-block">
+<div class="line"><strong>項番</strong></div>
+</div>
+</th>
+<th class="head stub"><div class="line-block">
+<div class="line"><strong>状態名</strong></div>
+</div>
+</th>
+<th class="head stub"><div class="line-block">
+<div class="line"><strong>異常発生回数</strong></div>
+</div>
+</th>
+<th class="head"><div class="line-block">
+<div class="line"><strong>イベント1</strong></div>
+<div class="line">優先度高</div>
+<div class="line">電源ON</div>
+</div>
+</th>
+<th class="head"><div class="line-block">
+<div class="line"><strong>イベント2</strong></div>
+<div class="line">優先度高</div>
+<div class="line">電源OFF</div>
+</div>
+</th>
+<th class="head"><div class="line-block">
+<div class="line"><strong>イベント3</strong></div>
+<div class="line">優先度中</div>
+<div class="line">異常発生</div>
+</div>
+</th>
+<th class="head"><div class="line-block">
+<div class="line"><strong>イベント4</strong></div>
+<div class="line">優先度低</div>
+<div class="line">タイムアウト</div>
+</div>
+</th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><th class="stub"><p>1</p></th>
+<th class="stub"><p>初期状態</p></th>
+<th class="stub"><div class="line-block">
+<div class="line"><strong>-</strong></div>
+</div>
+</th>
+<td><div class="line-block">
+<div class="line"><strong>異常発生回数を0に</strong></div>
+<div class="line">項番2へ</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">-</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">-</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">-</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><th class="stub"><p>2</p></th>
+<th class="stub"><p>起動中</p></th>
+<th class="stub"><div class="line-block">
+<div class="line"><strong>*</strong></div>
+</div>
+</th>
+<td><div class="line-block">
+<div class="line">-</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">-</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line"><strong>異常発生回数に1加算する</strong></div>
+<div class="line">項番4へ</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">項番3へ</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><th class="stub"><p>3</p></th>
+<th class="stub"><p>定常稼動中</p></th>
+<th class="stub"><div class="line-block">
+<div class="line"><strong>*</strong></div>
+</div>
+</th>
+<td><div class="line-block">
+<div class="line">-</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">項番6へ</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line"><strong>異常発生回数に1加算する</strong></div>
+<div class="line">項番4へ</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">-</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><th class="stub"><p>4</p></th>
+<th class="stub"><p>異常終了中</p></th>
+<th class="stub"><div class="line-block">
+<div class="line"><strong>3未満</strong></div>
+</div>
+</th>
+<td><div class="line-block">
+<div class="line">-</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">項番6へ</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">-</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line"><strong>項番2へ</strong></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><th class="stub"><p>4</p></th>
+<th class="stub"><p>異常終了中</p></th>
+<th class="stub"><div class="line-block">
+<div class="line"><strong>3以上</strong></div>
+</div>
+</th>
+<td><div class="line-block">
+<div class="line">-</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">項番6へ</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">-</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line"><strong>項番5へ</strong></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><th class="stub"><p>5</p></th>
+<th class="stub"><p>異常停止中</p></th>
+<th class="stub"><div class="line-block">
+<div class="line"><strong>3以上</strong></div>
+</div>
+</th>
+<td><div class="line-block">
+<div class="line">-</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">項番1へ</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">-</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">-</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><th class="stub"><p>6</p></th>
+<th class="stub"><p>終了中</p></th>
+<th class="stub"><div class="line-block">
+<div class="line"><strong>*</strong></div>
+</div>
+</th>
+<td><div class="line-block">
+<div class="line">-</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">-</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">-</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">項番1へ</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="line-block">
+<div class="line">登場するバッファの初期化、アクセス、判断タイミングを明記することで、順番の入れ違いや初期化漏れを回避する。</div>
+<div class="line">今回特に数字の判断を要しない個所は*で省略してある。</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<div class="line-block">
+<div class="line">書いた後に、きちんとどのルートも期待する最後まで順繰りに辿れることを確認する事!!</div>
+</div>
+</div>
+</div>
+<div class="section" id="id6">
+<h2>注意事項<a class="headerlink" href="#id6" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<ul class="simple">
+<li><p>制御に関連する登場人物は全て登場させる事。</p></li>
+<li><p>イベントの優先度は分かるようにしておく事。出来るなら左から優先度降順に並べると分かり易い。同時に発生した場合どちらを優先するのかを明記する手間が省ける。</p></li>
+<li><p>状態は隙間が無いようにする事。例えば外部にデータを保存する場合、保存開始から保存完了までにラグがある為、きちんと保存中と言った状態を用意すること。</p></li>
+<li><p>イベントが発生しない個所と、発生しても無視をする個所は説明時にはっきりと言えるようにする。可能ならば表内に書いてしまう。</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<div class="line-block">
+<div class="line">ちょっと作るとすぐに表が大きくなる為、レビュー時にはすぐに分かってもらえるよう説明の順番や見せ方等工夫しよう。</div>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+        </div>
+        <div class="sidebar">
+          
+          <h3>目次</h3>
+          <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">開発の流れ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../glossary/index.html">用語集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../hard/index.html">ハード</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../soft/index.html">ソフト</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tools/index.html">Tools</a></li>
+</ul>
+
+          <div role="search">
+            <h3 style="margin-top: 1.5em;">検索</h3>
+            <form class="search" action="../../search.html" method="get">
+                <input type="text" name="q" />
+                <input type="submit" value="検索" />
+            </form>
+          </div>
+
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          <div role="navigation" aria-label="related navigaton">
+            <a href="sequence.html" title="シーケンス図"
+              >前へ</a> |
+            <a href="../3-MK/index.html" title="【MK】コーディング"
+              >次へ</a> |
+            <a href="../../genindex.html" title="総合索引"
+              >索引</a>
+          </div>
+          <div role="note" aria-label="source link">
+              <br/>
+              <a href="../../_sources/development_flow/2-PD/state_transition_table.rst.txt"
+                rel="nofollow">ソースコードを表示</a>
+          </div>
+        </div>
+
+        <div class="right">
+          
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, TCS_Himeji.
+      このドキュメントは <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.4 で生成しました。
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+  </body>
+</html>

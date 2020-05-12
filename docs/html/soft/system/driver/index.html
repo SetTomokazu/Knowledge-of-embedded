@@ -1,0 +1,119 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <title>Driver(ドライバ) &#8212; KnowledgeOfEmbedded 0.0.1 ドキュメント</title>
+    <link rel="stylesheet" href="../../../_static/agogo.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/language_data.js"></script>
+    <script src="../../../_static/translations.js"></script>
+    <link rel="index" title="索引" href="../../../genindex.html" />
+    <link rel="search" title="検索" href="../../../search.html" />
+    <link rel="next" title="OS" href="../os/index.html" />
+    <link rel="prev" title="システム構造" href="../index.html" /> 
+  </head><body>
+    <div class="header-wrapper" role="banner">
+      <div class="header">
+        <div class="headertitle"><a
+          href="../../../index.html">KnowledgeOfEmbedded 0.0.1 ドキュメント</a></div>
+        <div class="rel" role="navigation" aria-label="related navigation">
+          <a href="../index.html" title="システム構造"
+             accesskey="P">前へ</a> |
+          <a href="../os/index.html" title="OS"
+             accesskey="N">次へ</a> |
+          <a href="../../../genindex.html" title="総合索引"
+             accesskey="I">索引</a>
+        </div>
+       </div>
+    </div>
+
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="document">
+            
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="driver">
+<span id="index-0"></span><span id="id1"></span><h1>Driver(ドライバ)<a class="headerlink" href="#driver" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="line-block">
+<div class="line">組み込みのシステムには <a class="reference internal" href="../os/index.html#os"><span class="std std-ref">OS</span></a> や <a class="reference internal" href="../task/index.html#task"><span class="std std-ref">Task(タスク)</span></a> 以外にDriverが存在する。</div>
+<div class="line">ここではそのDriverについて説明する。</div>
+</div>
+<div class="section" id="id2">
+<h2>概要<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="line-block">
+<div class="line">組み込み開発ではマイコン毎に制御方式が大きく異なる。</div>
+<div class="line"><a class="reference internal" href="#driver"><span class="std std-ref">Driver(ドライバ)</span></a> はその制御方式の差分を吸収し、 <a class="reference internal" href="../os/index.html#os"><span class="std std-ref">OS</span></a> や <a class="reference internal" href="../task/index.html#task"><span class="std std-ref">Task(タスク)</span></a> に変わらないIFを提供する。</div>
+<div class="line">つまり、違うマイコンにシステムを載せ替える際、最も変更量が激しいのがこの <a class="reference internal" href="#driver"><span class="std std-ref">Driver(ドライバ)</span></a> である。</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+        </div>
+        <div class="sidebar">
+          
+          <h3>目次</h3>
+          <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../development_flow/index.html">開発の流れ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../glossary/index.html">用語集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../hard/index.html">ハード</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">ソフト</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">Tools</a></li>
+</ul>
+
+          <div role="search">
+            <h3 style="margin-top: 1.5em;">検索</h3>
+            <form class="search" action="../../../search.html" method="get">
+                <input type="text" name="q" />
+                <input type="submit" value="検索" />
+            </form>
+          </div>
+
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          <div role="navigation" aria-label="related navigaton">
+            <a href="../index.html" title="システム構造"
+              >前へ</a> |
+            <a href="../os/index.html" title="OS"
+              >次へ</a> |
+            <a href="../../../genindex.html" title="総合索引"
+              >索引</a>
+          </div>
+          <div role="note" aria-label="source link">
+              <br/>
+              <a href="../../../_sources/soft/system/driver/index.rst.txt"
+                rel="nofollow">ソースコードを表示</a>
+          </div>
+        </div>
+
+        <div class="right">
+          
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, TCS_Himeji.
+      このドキュメントは <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.4 で生成しました。
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+  </body>
+</html>

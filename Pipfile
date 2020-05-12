@@ -24,4 +24,5 @@ python_version = "3.8"
 
 [scripts]
 build = "sphinx-build -M html source build"
+export = "sphinx-build -M html source docs"
 auto_build = "sphinx-autobuild -b html source build/html"

@@ -1,0 +1,244 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <title>車載用語集 &#8212; KnowledgeOfEmbedded 0.0.1 ドキュメント</title>
+    <link rel="stylesheet" href="../_static/agogo.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/translations.js"></script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="next" title="Register(レジスタ)" href="register.html" />
+    <link rel="prev" title="I2C通信" href="i2c.html" /> 
+  </head><body>
+    <div class="header-wrapper" role="banner">
+      <div class="header">
+        <div class="headertitle"><a
+          href="../index.html">KnowledgeOfEmbedded 0.0.1 ドキュメント</a></div>
+        <div class="rel" role="navigation" aria-label="related navigation">
+          <a href="i2c.html" title="I2C通信"
+             accesskey="P">前へ</a> |
+          <a href="register.html" title="Register(レジスタ)"
+             accesskey="N">次へ</a> |
+          <a href="../genindex.html" title="総合索引"
+             accesskey="I">索引</a>
+        </div>
+       </div>
+    </div>
+
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="document">
+            
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="id1">
+<span id="index-0"></span><span id="id2"></span><h1>車載用語集<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<p>車載組み込み開発を行うために必要な知識を列挙する。</p>
+<div class="section" id="bu">
+<span id="index-1"></span><span id="id3"></span><h2>BU電源<a class="headerlink" href="#bu" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="line-block">
+<div class="line">バッテリーユニットの略と思われる。</div>
+<div class="line">バッテリー電源、単にBU、+B電源(ぷらびでんげん)とも。</div>
+<div class="line">バッテリーによって基盤に供給される電源電圧。</div>
+<div class="line">これが印加されていないと基本的に何も動かない。</div>
+<div class="line">BUが印加されている状態の事をBU ON状態ともいう。</div>
+<div class="line">BU ONのことを+B ON(ぷらび おん)ともいう。</div>
+</div>
+</div>
+<div class="section" id="acc">
+<span id="index-2"></span><span id="id4"></span><h2>ACC電源<a class="headerlink" href="#acc" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="line-block">
+<div class="line">アクセサリー電源。単にACCとも。</div>
+<div class="line">ACCが印加されている状態の事を ACC ON状態ともいう。</div>
+<div class="line">車にキーを挿入して回した際に最初に入る電源である。</div>
+<div class="line">基本的にナビやその他の車載機器はこの電源が入っている間に動作する。</div>
+<div class="line">供給源はバッテリーのため、 <a class="reference internal" href="#bu"><span class="std std-ref">BU電源</span></a> 印加中が前提条件。</div>
+<div class="line">基本的にこの電源がONになったら動作する。</div>
+<div class="line">ACCがOFFの状態、つまりマイコンが動作していない状態の時にACCがONになったことを検知できるのは、</div>
+<div class="line"><a class="reference internal" href="#bu"><span class="std std-ref">BU電源</span></a> で動作し続けACC電源を監視しているマイコンが居るからである。</div>
+<div class="line">その役割を果たすマイコンの事を電源マイコンと呼んだりする。</div>
+</div>
+</div>
+<div class="section" id="ig">
+<span id="index-3"></span><span id="id5"></span><h2>IG電源<a class="headerlink" href="#ig" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="line-block">
+<div class="line">イグニッション電源。単にIGとも。</div>
+<div class="line">エンジンスタートの際にバッテリーから多量に電力を供給しエンジンを回し始めることに使用される。</div>
+<div class="line">そのため、この電源が印加されている間は基盤に供給される電圧や電流が乱れることがあり、異常を検知しやすくなる。</div>
+<div class="line">最近流行のハイブリッド車では赤信号で停車中や一定速度にて走行中にてエンジンを停止し、</div>
+<div class="line">発進や加速を行う際にエンジンを自動で再開するクランキングを行う。</div>
+<div class="line">このクランキングもつまりはイグニッション電源を自動で印加している為、その度に内部電圧が乱高下する。</div>
+<div class="line">機種によってはこの電圧変化を吸収し基盤へ安定した電源を供給する回路が組まれているものもあるらしい。</div>
+</div>
+</div>
+<div class="section" id="id6">
+<span id="index-4"></span><span id="id7"></span><h2>暗電流<a class="headerlink" href="#id6" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="#bu"><span class="std std-ref">BU電源</span></a> のみが印加されている状態で基盤で消費する電流値</div>
+<div class="line">これが高い = エンジンをかけていない状態での消費電力が上がる = バッテリーが上がりやすくなる</div>
+</div>
+</div>
+<div class="section" id="id8">
+<h2>実車<a class="headerlink" href="#id8" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="line-block">
+<div class="line">実運用する車のこと。</div>
+<div class="line">実際に全車載機を接続して評価を行う事を実車評価という。</div>
+</div>
+</div>
+<div class="section" id="id9">
+<span id="index-5"></span><span id="id10"></span><h2>ハーネス<a class="headerlink" href="#id9" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="line-block">
+<div class="line">基盤に接続するケーブル類をハーネスという。</div>
+<div class="line">特に電源ケーブルの事を意味することも。その場合電源ハーネスともいうけど。</div>
+</div>
+</div>
+<div class="section" id="id11">
+<h2>電源ライフサイクル<a class="headerlink" href="#id11" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div><svg height="540" viewBox="0 0 832 540" width="832" xmlns="http://www.w3.org/2000/svg" xmlns:inkspace="http://www.inkscape.org/namespaces/inkscape" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <defs id="defs_block">
+    <filter height="1.504" id="filter_blur" inkspace:collect="always" width="1.1575" x="-0.07875" y="-0.252">
+      <feGaussianBlur id="feGaussianBlur3780" inkspace:collect="always" stdDeviation="4.2" />
+    </filter>
+  </defs>
+  <title>blockdiag</title>
+  <desc />
+  <rect fill="rgb(0,0,0)" height="376" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" width="8" x="127" y="142" />
+  <rect fill="rgb(0,0,0)" height="330" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" width="8" x="319" y="142" />
+  <rect fill="rgb(0,0,0)" height="198" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" width="8" x="511" y="208" />
+  <rect fill="rgb(0,0,0)" height="66" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" width="8" x="703" y="274" />
+  <rect fill="rgb(0,0,0)" height="40" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" width="128" x="67" y="46" />
+  <rect fill="rgb(0,0,0)" height="40" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" width="128" x="259" y="46" />
+  <rect fill="rgb(0,0,0)" height="40" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" width="128" x="451" y="46" />
+  <rect fill="rgb(0,0,0)" height="40" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" width="128" x="643" y="46" />
+  <path d="M 128 80 L 128 528" fill="none" stroke="rgb(0,0,0)" stroke-dasharray="8 4" />
+  <rect fill="moccasin" height="376" stroke="rgb(0,0,0)" width="8" x="124" y="136" />
+  <path d="M 320 80 L 320 528" fill="none" stroke="rgb(0,0,0)" stroke-dasharray="8 4" />
+  <rect fill="moccasin" height="330" stroke="rgb(0,0,0)" width="8" x="316" y="136" />
+  <path d="M 512 80 L 512 528" fill="none" stroke="rgb(0,0,0)" stroke-dasharray="8 4" />
+  <rect fill="moccasin" height="198" stroke="rgb(0,0,0)" width="8" x="508" y="202" />
+  <path d="M 704 80 L 704 528" fill="none" stroke="rgb(0,0,0)" stroke-dasharray="8 4" />
+  <rect fill="moccasin" height="66" stroke="rgb(0,0,0)" width="8" x="700" y="268" />
+  <rect fill="rgb(255,255,255)" height="40" stroke="rgb(0,0,0)" width="128" x="64" y="40" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="55" x="128.5" y="66">PowerOFF</text>
+  <rect fill="rgb(255,255,255)" height="40" stroke="rgb(0,0,0)" width="128" x="256" y="40" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="45" x="320.5" y="67">Standby</text>
+  <rect fill="rgb(255,255,255)" height="40" stroke="rgb(0,0,0)" width="128" x="448" y="40" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="20" x="512.0" y="66">Idle</text>
+  <rect fill="rgb(255,255,255)" height="40" stroke="rgb(0,0,0)" width="128" x="640" y="40" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="12" x="704.0" y="66">IG</text>
+  <path d="M 136 136 L 312 136" fill="none" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="304,132 312,136 304,140" stroke="rgb(0,0,0)" />
+  <path d="M 328 202 L 504 202" fill="none" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="496,198 504,202 496,206" stroke="rgb(0,0,0)" />
+  <path d="M 520 268 L 696 268" fill="none" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="688,264 696,268 688,272" stroke="rgb(0,0,0)" />
+  <path d="M 520 334 L 696 334" fill="none" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="528,330 520,334 528,338" stroke="rgb(0,0,0)" />
+  <path d="M 328 400 L 504 400" fill="none" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="336,396 328,400 336,404" stroke="rgb(0,0,0)" />
+  <path d="M 136 466 L 312 466" fill="none" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="144,462 136,466 144,470" stroke="rgb(0,0,0)" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="34" x="157.0" y="134">Bu ON</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="41" x="352.5" y="200">ACC ON</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="32" x="540.0" y="266">IG ON</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="37" x="677.5" y="332">IG OFF</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="46" x="481.0" y="398">ACC OFF</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="39" x="292.5" y="464">Bu OFF</text>
+</svg>
+</div>
+</div>
+</div>
+<div class="section" id="ecu">
+<span id="index-6"></span><span id="id12"></span><h1>ECU<a class="headerlink" href="#ecu" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="line-block">
+<div class="line">開発しているマイコンが搭載された基盤全体の事。</div>
+</div>
+</div>
+<div class="section" id="id13">
+<span id="index-7"></span><span id="id14"></span><h1>ECUケース<a class="headerlink" href="#id13" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="line-block">
+<div class="line">ECUを車に乗せる為のケース</div>
+<div class="line">流石に振動、衝撃、放熱がある車に基盤を裸のまま載せるという事はせず、</div>
+<div class="line">きちんと専用のケースに収めて搭載する。</div>
+<div class="line">これで包み込むと電源ハーネスとその他外部接続機器しか繋がらなくなる。</div>
+<div class="line">つまりデバッグ開発用のICEが繋がらない。</div>
+</div>
+</div>
+<div class="section" id="id15">
+<span id="index-8"></span><span id="id16"></span><h1>放熱ゲル<a class="headerlink" href="#id15" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="line-block">
+<div class="line">基盤を <a class="reference internal" href="#id13"><span class="std std-ref">ECUケース</span></a> に入れる際に基盤と <a class="reference internal" href="#id13"><span class="std std-ref">ECUケース</span></a> の間に塗るゲルの事。</div>
+<div class="line">不具合改修などで <a class="reference internal" href="#id13"><span class="std std-ref">ECUケース</span></a> ごと搬入された場合、開封作業がこの粘着力のお蔭で少々苦労する。</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+        </div>
+        <div class="sidebar">
+          
+          <h3>目次</h3>
+          <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../development_flow/index.html">開発の流れ</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">用語集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../hard/index.html">ハード</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../soft/index.html">ソフト</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html">Tools</a></li>
+</ul>
+
+          <div role="search">
+            <h3 style="margin-top: 1.5em;">検索</h3>
+            <form class="search" action="../search.html" method="get">
+                <input type="text" name="q" />
+                <input type="submit" value="検索" />
+            </form>
+          </div>
+
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          <div role="navigation" aria-label="related navigaton">
+            <a href="i2c.html" title="I2C通信"
+              >前へ</a> |
+            <a href="register.html" title="Register(レジスタ)"
+              >次へ</a> |
+            <a href="../genindex.html" title="総合索引"
+              >索引</a>
+          </div>
+          <div role="note" aria-label="source link">
+              <br/>
+              <a href="../_sources/glossary/in_vehicle.rst.txt"
+                rel="nofollow">ソースコードを表示</a>
+          </div>
+        </div>
+
+        <div class="right">
+          
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, TCS_Himeji.
+      このドキュメントは <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.4 で生成しました。
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+  </body>
+</html>

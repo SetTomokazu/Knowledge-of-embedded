@@ -1,0 +1,129 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <title>NOP &#8212; KnowledgeOfEmbedded 0.0.1 ドキュメント</title>
+    <link rel="stylesheet" href="../../_static/agogo.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../_static/translations.js"></script>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="検索" href="../../search.html" />
+    <link rel="next" title="Pointer(ポインタ)" href="pointer.html" />
+    <link rel="prev" title="ライフサイクル" href="lifecycle.html" /> 
+  </head><body>
+    <div class="header-wrapper" role="banner">
+      <div class="header">
+        <div class="headertitle"><a
+          href="../../index.html">KnowledgeOfEmbedded 0.0.1 ドキュメント</a></div>
+        <div class="rel" role="navigation" aria-label="related navigation">
+          <a href="lifecycle.html" title="ライフサイクル"
+             accesskey="P">前へ</a> |
+          <a href="pointer.html" title="Pointer(ポインタ)"
+             accesskey="N">次へ</a> |
+          <a href="../../genindex.html" title="総合索引"
+             accesskey="I">索引</a>
+        </div>
+       </div>
+    </div>
+
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="document">
+            
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="nop">
+<span id="index-0"></span><span id="id1"></span><h1>NOP<a class="headerlink" href="#nop" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="line-block">
+<div class="line">一定時間処理を待ちたい場合、nsもしくはμs単位で厳密に時間を測る必要がある場合に使用される。</div>
+<div class="line">CPUに1ソースクロック分何もしないで待機させるという命令である。</div>
+<div class="line">例えばソースクロックが80MHzの場合、</div>
+<div class="line">1[s] * 10^9[ns] / (80 * 10^6) = 12.5[ns]</div>
+<div class="line">となり、NOP一回で12.5ns次のプログラムの実行を待機することになる。</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<div class="line-block">
+<div class="line">NOPもアセンブラで1行の命令である為、大量に行うとソースコード量が一気に増える。</div>
+<div class="line">例えば1msなんていう長い時間待ちたい時にNOPを使用すると</div>
+<div class="line">1[ms] * 10^6[ns] / 12.5[ns] = 80000回NOPを行う必要がある。</div>
+<div class="line">これは1命令長(4byte)×80000byte分コード領域を使用する事にもなり、</div>
+<div class="line">つまりこれだけで320KByteというえげつない量のソースコードになる。</div>
+<div class="line">気を付けよう。</div>
+</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>基本アセンブラコードの為、マイコン毎に記述方式が異なる。よく探そう。</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+        </div>
+        <div class="sidebar">
+          
+          <h3>目次</h3>
+          <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../development_flow/index.html">開発の流れ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../glossary/index.html">用語集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../hard/index.html">ハード</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">ソフト</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tools/index.html">Tools</a></li>
+</ul>
+
+          <div role="search">
+            <h3 style="margin-top: 1.5em;">検索</h3>
+            <form class="search" action="../../search.html" method="get">
+                <input type="text" name="q" />
+                <input type="submit" value="検索" />
+            </form>
+          </div>
+
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          <div role="navigation" aria-label="related navigaton">
+            <a href="lifecycle.html" title="ライフサイクル"
+              >前へ</a> |
+            <a href="pointer.html" title="Pointer(ポインタ)"
+              >次へ</a> |
+            <a href="../../genindex.html" title="総合索引"
+              >索引</a>
+          </div>
+          <div role="note" aria-label="source link">
+              <br/>
+              <a href="../../_sources/soft/coding/nop.rst.txt"
+                rel="nofollow">ソースコードを表示</a>
+          </div>
+        </div>
+
+        <div class="right">
+          
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, TCS_Himeji.
+      このドキュメントは <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.4 で生成しました。
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+  </body>
+</html>

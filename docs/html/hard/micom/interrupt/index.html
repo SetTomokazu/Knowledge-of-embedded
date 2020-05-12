@@ -1,0 +1,238 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <title>Interrupt(割り込み) &#8212; KnowledgeOfEmbedded 0.0.1 ドキュメント</title>
+    <link rel="stylesheet" href="../../../_static/agogo.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/language_data.js"></script>
+    <script src="../../../_static/translations.js"></script>
+    <link rel="index" title="索引" href="../../../genindex.html" />
+    <link rel="search" title="検索" href="../../../search.html" />
+    <link rel="next" title="Pin" href="../pin/index.html" />
+    <link rel="prev" title="FLASH" href="../flash/index.html" /> 
+  </head><body>
+    <div class="header-wrapper" role="banner">
+      <div class="header">
+        <div class="headertitle"><a
+          href="../../../index.html">KnowledgeOfEmbedded 0.0.1 ドキュメント</a></div>
+        <div class="rel" role="navigation" aria-label="related navigation">
+          <a href="../flash/index.html" title="FLASH"
+             accesskey="P">前へ</a> |
+          <a href="../pin/index.html" title="Pin"
+             accesskey="N">次へ</a> |
+          <a href="../../../genindex.html" title="総合索引"
+             accesskey="I">索引</a>
+        </div>
+       </div>
+    </div>
+
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="document">
+            
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="interrupt">
+<span id="index-0"></span><span id="id1"></span><h1>Interrupt(割り込み)<a class="headerlink" href="#interrupt" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="line-block">
+<div class="line">マイコンがハード的に一定の条件を満たした時に発生するイベントの事である。</div>
+<div class="line">このイベントによって実行される処理を割り込み処理という。</div>
+<div class="line">現行の処理を中断して割り込み処理が行われるため、</div>
+<div class="line">割り込みが発生して欲しくない処理を行う際は  <a class="reference internal" href="../../../soft/coding/diei.html#di"><span class="std std-ref">DI</span></a> をし、</div>
+<div class="line">その処理が終わり次第 <a class="reference internal" href="../../../soft/coding/diei.html#ei"><span class="std std-ref">EI</span></a> を行う。</div>
+<div class="line">この割り込み禁止をしている時間(通称：割禁時間)は短ければ短いほどほかの処理に与える影響が低くなるため、</div>
+<div class="line">必要最低限の処理のみを割禁時間とするように設計する。</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<div class="line-block">
+<div class="line">例えばボーレート115200bpsでUART通信を行っている場合、1バイト毎の受信完了割り込みは</div>
+<div class="line">&gt; 1[s] * 1000[ms] * 1000[μs] / 115200 = 約8.68μs毎</div>
+<div class="line">に発生する。この時に9μs以上割り禁を行うと受信したデータをロストしてしまうことになる。</div>
+</div>
+</div>
+</div>
+<div class="section" id="irq-interrupt-request">
+<span id="irq"></span><span id="index-1"></span><h1>IRQ(Interrupt ReQuest:割り込み要求)<a class="headerlink" href="#irq-interrupt-request" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="line-block">
+<div class="line">名前の通り割り込みの要求そのもの。</div>
+<div class="line">これに数字を追加して割り込みを番号で呼ぶこともある。</div>
+</div>
+</div>
+<div class="section" id="external-interrupt">
+<span id="extint"></span><span id="index-2"></span><h1>External Interrupt(外部割り込み)<a class="headerlink" href="#external-interrupt" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="line-block">
+<div class="line">外部からの要因で発生する割り込みの事。</div>
+<div class="line">端子の状態による割り込みや、通信結果の割り込みがこれにあたる。</div>
+</div>
+</div>
+<div class="section" id="internal-interrupt">
+<span id="intint"></span><span id="index-3"></span><h1>Internal Interrupt(内部割り込み)<a class="headerlink" href="#internal-interrupt" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="line-block">
+<div class="line">マイコン自身が発生させる割り込みの事。</div>
+<div class="line">内部で仕掛けたタイマや、 <a class="reference internal" href="#id5"><span class="std std-ref">例外</span></a> 等がこれにあたる。</div>
+</div>
+</div>
+<div class="section" id="interruput-priority">
+<span id="priority"></span><span id="index-4"></span><h1>Interruput Priority(割り込み優先度)<a class="headerlink" href="#interruput-priority" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="line-block">
+<div class="line">割り込みが発生した際の実行優先度</div>
+<div class="line">各割り込みには個別で優先度を設定できる。</div>
+<div class="line">その優先度に従い、発生時の実行順番を制御する。</div>
+<div class="line">割り込み発生中に他の割り込みが動作する事を多重割り込みと言い、制御が非常に複雑になる。</div>
+<div class="line">その為、意図的に優先度を全て等しくし、多重割り込みを発生させないようにする場合もある。</div>
+</div>
+<div><svg height="544" viewBox="0 0 640 544" width="640" xmlns="http://www.w3.org/2000/svg" xmlns:inkspace="http://www.inkscape.org/namespaces/inkscape" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <defs id="defs_block">
+    <filter height="1.504" id="filter_blur" inkspace:collect="always" width="1.1575" x="-0.07875" y="-0.252">
+      <feGaussianBlur id="feGaussianBlur3780" inkspace:collect="always" stdDeviation="4.2" />
+    </filter>
+  </defs>
+  <title>blockdiag</title>
+  <desc />
+  <rect fill="rgb(0,0,0)" height="396" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" width="8" x="127" y="126" />
+  <rect fill="rgb(0,0,0)" height="50" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" width="8" x="319" y="226" />
+  <rect fill="rgb(0,0,0)" height="50" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" width="8" x="319" y="376" />
+  <rect fill="rgb(0,0,0)" height="50" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" width="8" x="511" y="126" />
+  <rect fill="rgb(0,0,0)" height="150" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" width="8" x="511" y="326" />
+  <rect fill="rgb(0,0,0)" height="40" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" width="128" x="67" y="46" />
+  <rect fill="rgb(0,0,0)" height="40" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" width="128" x="259" y="46" />
+  <rect fill="rgb(0,0,0)" height="40" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" width="128" x="451" y="46" />
+  <path d="M 128 80 L 128 532" fill="none" stroke="rgb(0,0,0)" stroke-dasharray="8 4" />
+  <rect fill="moccasin" height="396" stroke="rgb(0,0,0)" width="8" x="124" y="120" />
+  <path d="M 320 80 L 320 532" fill="none" stroke="rgb(0,0,0)" stroke-dasharray="8 4" />
+  <rect fill="moccasin" height="50" stroke="rgb(0,0,0)" width="8" x="316" y="220" />
+  <rect fill="moccasin" height="50" stroke="rgb(0,0,0)" width="8" x="316" y="370" />
+  <path d="M 512 80 L 512 532" fill="none" stroke="rgb(0,0,0)" stroke-dasharray="8 4" />
+  <rect fill="moccasin" height="50" stroke="rgb(0,0,0)" width="8" x="508" y="120" />
+  <rect fill="moccasin" height="150" stroke="rgb(0,0,0)" width="8" x="508" y="320" />
+  <rect fill="rgb(255,255,255)" height="40" stroke="rgb(0,0,0)" width="128" x="64" y="40" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="50" x="128.0" y="66">Common</text>
+  <rect fill="rgb(255,255,255)" height="40" stroke="rgb(0,0,0)" width="128" x="256" y="40" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="70" x="320.0" y="59">High Priority</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="50" x="320.0" y="75">Interrupt</text>
+  <rect fill="rgb(255,255,255)" height="40" stroke="rgb(0,0,0)" width="128" x="448" y="40" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="67" x="512.5" y="59">Low Priority</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="50" x="512.0" y="75">Interrupt</text>
+  <path d="M 136 120 L 504 120" fill="none" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="496,116 504,120 496,124" stroke="rgb(0,0,0)" />
+  <path d="M 136 170 L 504 170" fill="none" stroke="rgb(0,0,0)" stroke-dasharray="4" />
+  <polygon fill="rgb(0,0,0)" points="144,166 136,170 144,174" stroke="rgb(0,0,0)" />
+  <path d="M 136 220 L 312 220" fill="none" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="304,216 312,220 304,224" stroke="rgb(0,0,0)" />
+  <path d="M 136 270 L 312 270" fill="none" stroke="rgb(0,0,0)" stroke-dasharray="4" />
+  <polygon fill="rgb(0,0,0)" points="144,266 136,270 144,274" stroke="rgb(0,0,0)" />
+  <path d="M 136 320 L 504 320" fill="none" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="496,316 504,320 496,324" stroke="rgb(0,0,0)" />
+  <path d="M 328 370 L 504 370" fill="none" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="336,366 328,370 336,374" stroke="rgb(0,0,0)" />
+  <path d="M 328 420 L 504 420" fill="none" stroke="rgb(0,0,0)" stroke-dasharray="4" />
+  <polygon fill="rgb(0,0,0)" points="496,416 504,420 496,424" stroke="rgb(0,0,0)" />
+  <path d="M 136 470 L 504 470" fill="none" stroke="rgb(0,0,0)" stroke-dasharray="4" />
+  <polygon fill="rgb(0,0,0)" points="144,466 136,470 144,474" stroke="rgb(0,0,0)" />
+</svg>
+</div>
+</div>
+<div class="section" id="mask">
+<span id="index-5"></span><span id="id2"></span><h1>Mask<a class="headerlink" href="#mask" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="line-block">
+<div class="line">覆い隠す事。</div>
+<div class="line">大抵組み込みでは割り込みに対して使用する言葉</div>
+<div class="line">Maskすることで、Mask中は該当する割り込みは実行を待機することになる。</div>
+<div class="line"><a class="reference internal" href="#priority"><span class="std std-ref">Interruput Priority(割り込み優先度)</span></a> のレベルを指定する事で、そのレベル以下の割り込みのみをMaskすることもできる。</div>
+</div>
+</div>
+<div class="section" id="nmi">
+<span id="index-6"></span><span id="id3"></span><h1>NMI<a class="headerlink" href="#nmi" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="line-block">
+<div class="line">Non Maskable Interrupt</div>
+<div class="line"><a class="reference internal" href="#priority"><span class="std std-ref">Interruput Priority(割り込み優先度)</span></a> が最も高く、 <a class="reference internal" href="#mask"><span class="std std-ref">Mask</span></a> 不可能な割り込みの事。</div>
+<div class="line">まあ、 <a class="reference internal" href="#reset"><span class="std std-ref">Reset</span></a> の事である。</div>
+</div>
+</div>
+<div class="section" id="reset">
+<span id="index-7"></span><span id="id4"></span><h1>Reset<a class="headerlink" href="#reset" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="line-block">
+<div class="line">マイコンの動作を全て初期状態に戻す為の割り込みの事。</div>
+<div class="line">外部Watckdogが居る場合、大抵この割り込み端子を制御させることになる。</div>
+</div>
+</div>
+<div class="section" id="id5">
+<span id="index-8"></span><span id="id6"></span><h1>例外<a class="headerlink" href="#id5" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="line-block">
+<div class="line">マイコンが異常を検知した場合、例外が発生する。</div>
+<div class="line">割り込みとは異なり、分かり易く表現するとマイコン自体の悲鳴である。</div>
+<div class="line">動作保障外の電圧への低下、 <a class="reference internal" href="../../../soft/coding/alignment.html#alignment"><span class="std std-ref">Alignment</span></a> 不正アクセス、予約領域へのアクセス等で発生する。</div>
+<div class="line"><a class="reference internal" href="../../../soft/coding/vectortable.html#id1"><span class="std std-ref">Vector Table(ベクタテーブル)</span></a> が通常のものに埋め込まれているマイコンと、別途存在するマイコンがある。</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+        </div>
+        <div class="sidebar">
+          
+          <h3>目次</h3>
+          <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../development_flow/index.html">開発の流れ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../glossary/index.html">用語集</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">ハード</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../soft/index.html">ソフト</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">Tools</a></li>
+</ul>
+
+          <div role="search">
+            <h3 style="margin-top: 1.5em;">検索</h3>
+            <form class="search" action="../../../search.html" method="get">
+                <input type="text" name="q" />
+                <input type="submit" value="検索" />
+            </form>
+          </div>
+
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          <div role="navigation" aria-label="related navigaton">
+            <a href="../flash/index.html" title="FLASH"
+              >前へ</a> |
+            <a href="../pin/index.html" title="Pin"
+              >次へ</a> |
+            <a href="../../../genindex.html" title="総合索引"
+              >索引</a>
+          </div>
+          <div role="note" aria-label="source link">
+              <br/>
+              <a href="../../../_sources/hard/micom/interrupt/index.rst.txt"
+                rel="nofollow">ソースコードを表示</a>
+          </div>
+        </div>
+
+        <div class="right">
+          
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, TCS_Himeji.
+      このドキュメントは <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.4 で生成しました。
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+  </body>
+</html>

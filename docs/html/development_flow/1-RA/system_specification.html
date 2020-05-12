@@ -1,0 +1,236 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <title>システム仕様書 &#8212; KnowledgeOfEmbedded 0.0.1 ドキュメント</title>
+    <link rel="stylesheet" href="../../_static/agogo.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../_static/translations.js"></script>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="検索" href="../../search.html" />
+    <link rel="next" title="DRBFM" href="drbfm.html" />
+    <link rel="prev" title="顧客要求仕様書" href="required_specification.html" /> 
+  </head><body>
+    <div class="header-wrapper" role="banner">
+      <div class="header">
+        <div class="headertitle"><a
+          href="../../index.html">KnowledgeOfEmbedded 0.0.1 ドキュメント</a></div>
+        <div class="rel" role="navigation" aria-label="related navigation">
+          <a href="required_specification.html" title="顧客要求仕様書"
+             accesskey="P">前へ</a> |
+          <a href="drbfm.html" title="DRBFM"
+             accesskey="N">次へ</a> |
+          <a href="../../genindex.html" title="総合索引"
+             accesskey="I">索引</a>
+        </div>
+       </div>
+    </div>
+
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="document">
+            
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="id1">
+<span id="index-0"></span><span id="id2"></span><h1>システム仕様書<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="line-block">
+<div class="line">顧客要求仕様書を受け、マイコン同士の構成やその分担内容を定義したもの</div>
+</div>
+<div class="section" id="id3">
+<h2>概要<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="line-block">
+<div class="line">納入する実物として基盤や搭載するマイコンの選定を行い、</div>
+<div class="line">それら各マイコンの役割分担等を示したもの。</div>
+<div class="line">母体を引き継いでの開発となる場合、その母体の全貌を把握するために最も有用な資料である。</div>
+<div class="line">ただ、母体からの改修を繰り返して作成される物である為、</div>
+<div class="line">資料間の齟齬があったり、複数資料を見渡して初めて一つの機能の説明になるものがあったりする。</div>
+<div class="line">可能ならば関係無いと思われる範囲の資料も軽く一通り目を通しておくべき。</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<div class="line-block">
+<div class="line">この仕様書に書かれている内容は基本的に母体のソースコードと密接に関わりがある。</div>
+<div class="line">その為、記述内容があやふやだったり、母体のソースコードと差異があったりする場合がある。</div>
+<div class="line">それらの内容については、母体を知っている人からどうしてそうしたのか話を聞くべきである。</div>
+</div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">警告</p>
+<div class="line-block">
+<div class="line">母体があるからこそ「こう変えました」って言えば伝わるだろうと高を括られている個所でもある。</div>
+<div class="line">記述だけを見て想定するものと、期待されているものは大きく異なる場合がある為、</div>
+<div class="line">記述内容がソースコードのどのあたりを指していて、</div>
+<div class="line">それに対してどの辺を変えれば出来るだろうと期待されているのかを</div>
+<div class="line">認識することが不可欠となる。</div>
+</div>
+</div>
+</div>
+<div class="section" id="id4">
+<h2>内容<a class="headerlink" href="#id4" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="line-block">
+<div class="line">種類としては以下のようなものがある。</div>
+<div class="line">これらは必ずこう分かれているというものではなく、あくまで指標である。</div>
+</div>
+<dl>
+<dt><strong>ブロック定義</strong></dt><dd><div class="line-block">
+<div class="line">開発を担当する基盤やそれに接続されているモジュールはどのように繋がっているのかを示したもの。</div>
+<div class="line">通信を行うのであればその通信規格まで記載がある。</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<div class="line-block">
+<div class="line">開発する基盤を俯瞰する際に最も役に立つ仕様書である。</div>
+<div class="line">通信などのマイコン間の連携での開発や不具合調査をする際には、</div>
+<div class="line">一度目を通し接続対象を知っておくと想定外の事態が起こりにくくなる。</div>
+</div>
+</div>
+</dd>
+<dt><strong>端子割り当て</strong></dt><dd><div class="line-block">
+<div class="line">各マイコンの端子についてそれぞれの接続先と設定内容が記載されている。</div>
+<div class="line">基本的に起動時の初期値が記載されている。</div>
+<div class="line">停止中もリセットがかからず電源が印加され続けるマイコンについてはその状態への言及もある。</div>
+<div class="line">これは電源OFFの状態での待機電力を下げる目的がある。</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<div class="line-block">
+<div class="line">マイコンのピンの数だけ記載がある為、ある意味最も情報量が多い仕様書でもある。</div>
+<div class="line">その分最も記述ミスが起こりやすい為、特に開発の初期段階では仕様書のダブルチェックをするくらいの気持ちで読むこと。</div>
+</div>
+</div>
+</dd>
+<dt><strong>電源シーケンス</strong></dt><dd><div class="line-block">
+<div class="line">電源が操作された際にどのように基盤に電源を印加していくのかを示した仕様書。</div>
+<div class="line">基盤が変わることにより電源モジュールやその他搭載チップ等がそれなりに変化する為、</div>
+<div class="line">母体継承開発でも基盤が変わればそれなりに変更量が出る個所であり、</div>
+<div class="line">動作の根幹部分の為不具合があると非常に面倒なことになる個所でもある。</div>
+<div class="line">また、根幹部分過ぎる為顧客から見れば出来ていて当然の個所でもある。</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<div class="line-block">
+<div class="line">制御する端子の数の多さが断トツで多く、その為に動作確認が非常に面倒な機能の一つである。</div>
+<div class="line">組み込み開発とはソフトとハードが混ざり合う開発であることが最もよくわかるドキュメントでもある。</div>
+</div>
+</div>
+</dd>
+<dt><strong>マイコン機能書</strong></dt><dd><div class="line-block">
+<div class="line">開発を行うマイコン毎に担当する機能についてある程度詳しく記載がある。</div>
+<div class="line">マイコンに接続されている他のマイコンやチップをどう制御するのかが主に書かれている。</div>
+</div>
+</dd>
+<dt><strong>コマンド仕様書</strong></dt><dd><div class="line-block">
+<div class="line">基盤上のマイコン間で行う通信のコマンド内容についての仕様書。</div>
+<div class="line">これを共通で定めることで送信したバイナリ列が受信側で正しく処理されるようになる。</div>
+</div>
+</dd>
+<dt><strong>異常判定仕様書</strong></dt><dd><div class="line-block">
+<div class="line">基盤上で異常を検知した際にどのようにフェールを働かせるのか、</div>
+<div class="line">またどのように復帰させるのかを示す仕様書。</div>
+<div class="line">とはいえ基盤上で起こりうる異常全てに対して記述があるわけではない。</div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">警告</p>
+<div class="line-block">
+<div class="line">基本的に単発で記載されており、複数の異常が競合した場合等については記載されていない場合が多い。</div>
+</div>
+</div>
+</dd>
+<dt><strong>基盤回路図</strong></dt><dd><div class="line-block">
+<div class="line"><a class="reference internal" href="../../glossary/in_vehicle.html#ecu"><span class="std std-ref">ECU</span></a> の回路図である。</div>
+<div class="line">実機の動作確認をする際には非常にお世話になる。</div>
+<div class="line">電子回路図がそのまま描かれており、前提の知識が無いと非常にハードルが高い。</div>
+<div class="line">しかし、単に接続先が知りたい場合などは単純に線を辿ればいいので初心者でも可能である。</div>
+<div class="line">当然のことながら電子回路図が読めれば更に理解が深まる。</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<div class="line-block">
+<div class="line">試験時に実際の端子や配線の状態を知りたい時が出てくるが、マイコンの形状によっては端子が隠れて見えないものがある。</div>
+<div class="line">そんなときの為に基盤にはそれっぽい配線はテストポイントとして露出してくれていたりする。</div>
+<div class="line">しかしそれがどこかわからない時やそもそも無い場合もある為、回路図から目的の端子と同じ値が読みだせる個所を見つける必要がある。</div>
+<div class="line">大抵の場合それは接続相手の端子だったりする。</div>
+</div>
+</div>
+</dd>
+<dt><strong>基盤配線図</strong></dt><dd><div class="line-block">
+<div class="line"><a class="reference internal" href="../../glossary/in_vehicle.html#ecu"><span class="std std-ref">ECU</span></a> の実際の配線図である。</div>
+<div class="line">基盤自体は大抵4層以上の積層構造となっており、表面だけで見える配線を辿って理解することは出来ない。</div>
+<div class="line">上記基盤回路図を実際に基盤にどう配置されているのかが示されている。</div>
+<div class="line">デバッグ時にどこを触ればいいのかを調べるために有用である。</div>
+</div>
+</dd>
+</dl>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+        </div>
+        <div class="sidebar">
+          
+          <h3>目次</h3>
+          <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">開発の流れ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../glossary/index.html">用語集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../hard/index.html">ハード</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../soft/index.html">ソフト</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tools/index.html">Tools</a></li>
+</ul>
+
+          <div role="search">
+            <h3 style="margin-top: 1.5em;">検索</h3>
+            <form class="search" action="../../search.html" method="get">
+                <input type="text" name="q" />
+                <input type="submit" value="検索" />
+            </form>
+          </div>
+
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          <div role="navigation" aria-label="related navigaton">
+            <a href="required_specification.html" title="顧客要求仕様書"
+              >前へ</a> |
+            <a href="drbfm.html" title="DRBFM"
+              >次へ</a> |
+            <a href="../../genindex.html" title="総合索引"
+              >索引</a>
+          </div>
+          <div role="note" aria-label="source link">
+              <br/>
+              <a href="../../_sources/development_flow/1-RA/system_specification.rst.txt"
+                rel="nofollow">ソースコードを表示</a>
+          </div>
+        </div>
+
+        <div class="right">
+          
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, TCS_Himeji.
+      このドキュメントは <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.4 で生成しました。
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+  </body>
+</html>

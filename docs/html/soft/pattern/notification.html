@@ -1,0 +1,225 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <title>状態通知 &#8212; KnowledgeOfEmbedded 0.0.1 ドキュメント</title>
+    <link rel="stylesheet" href="../../_static/agogo.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../_static/translations.js"></script>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="検索" href="../../search.html" />
+    <link rel="next" title="システム構造" href="../system/index.html" />
+    <link rel="prev" title="検知手法" href="detection.html" /> 
+  </head><body>
+    <div class="header-wrapper" role="banner">
+      <div class="header">
+        <div class="headertitle"><a
+          href="../../index.html">KnowledgeOfEmbedded 0.0.1 ドキュメント</a></div>
+        <div class="rel" role="navigation" aria-label="related navigation">
+          <a href="detection.html" title="検知手法"
+             accesskey="P">前へ</a> |
+          <a href="../system/index.html" title="システム構造"
+             accesskey="N">次へ</a> |
+          <a href="../../genindex.html" title="総合索引"
+             accesskey="I">索引</a>
+        </div>
+       </div>
+    </div>
+
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="document">
+            
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="id1">
+<span id="index-0"></span><span id="id2"></span><h1>状態通知<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="line-block">
+<div class="line">複数のマイコンを連携して一つのシステムを構築する場合、</div>
+<div class="line">当然ある程度の情報をマイコン間でやり取りをする。</div>
+<div class="line">その際に、通信していいかどうかの判断の為に相手の状態を知る必要がある。</div>
+<div class="line">よくある失敗例として、相手の起動完了を待たずに通信を行ってしまった例である。</div>
+</div>
+<div><svg height="590" viewBox="0 0 640 590" width="640" xmlns="http://www.w3.org/2000/svg" xmlns:inkspace="http://www.inkscape.org/namespaces/inkscape" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <defs id="defs_block">
+    <filter height="1.504" id="filter_blur" inkspace:collect="always" width="1.1575" x="-0.07875" y="-0.252">
+      <feGaussianBlur id="feGaussianBlur3780" inkspace:collect="always" stdDeviation="4.2" />
+    </filter>
+  </defs>
+  <title>blockdiag</title>
+  <desc />
+  <rect fill="rgb(0,0,0)" height="40" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" width="128" x="67" y="46" />
+  <rect fill="rgb(0,0,0)" height="40" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" width="128" x="259" y="46" />
+  <rect fill="rgb(0,0,0)" height="40" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" width="128" x="451" y="46" />
+  <path d="M 128 80 L 128 578" fill="none" stroke="rgb(0,0,0)" stroke-dasharray="8 4" />
+  <path d="M 320 80 L 320 578" fill="none" stroke="rgb(0,0,0)" stroke-dasharray="8 4" />
+  <path d="M 512 80 L 512 578" fill="none" stroke="rgb(0,0,0)" stroke-dasharray="8 4" />
+  <rect fill="rgb(255,255,255)" height="40" stroke="rgb(0,0,0)" width="128" x="64" y="40" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="34" x="128.0" y="66">Power</text>
+  <rect fill="rgb(255,255,255)" height="40" stroke="rgb(0,0,0)" width="128" x="256" y="40" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="44" x="320.0" y="66">MicomA</text>
+  <rect fill="rgb(255,255,255)" height="40" stroke="rgb(0,0,0)" width="128" x="448" y="40" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="44" x="512.0" y="66">MicomB</text>
+  <path d="M 136 216 L 312 216" fill="none" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="304,212 312,216 304,220" stroke="rgb(0,0,0)" />
+  <path d="M 136 282 L 504 282" fill="none" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="496,278 504,282 496,286" stroke="rgb(0,0,0)" />
+  <path d="M 328 349 L 416 349" fill="none" stroke="rgb(0,0,0)" />
+  <path d="M 416 349 L 416 365" fill="none" stroke="rgb(0,0,0)" />
+  <path d="M 416 365 L 328 365" fill="none" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="336,361 328,365 336,369" stroke="rgb(0,0,0)" />
+  <path d="M 328 433 L 408 433" fill="none" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="400,429 408,433 400,437" stroke="rgb(0,0,0)" />
+  <path d="M 416 425 L 432 441" fill="none" stroke="rgb(0,0,0)" />
+  <path d="M 416 441 L 432 425" fill="none" stroke="rgb(0,0,0)" />
+  <path d="M 520 500 L 600 500" fill="none" stroke="rgb(0,0,0)" />
+  <path d="M 600 500 L 600 516" fill="none" stroke="rgb(0,0,0)" />
+  <path d="M 600 516 L 520 516" fill="none" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="528,512 520,516 528,520" stroke="rgb(0,0,0)" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="54" x="167.0" y="214">Power ON</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="54" x="167.0" y="280">Power ON</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="44" x="350.0" y="347">起動完了</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="77" x="370.5" y="431">メッセージ送信</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="44" x="542.0" y="498">起動完了</text>
+  <path d="M 40 137 L 293 137" fill="none" stroke="rgb(0,0,0)" />
+  <path d="M 40 141 L 293 141" fill="none" stroke="rgb(0,0,0)" />
+  <path d="M 346 137 L 600 137" fill="none" stroke="rgb(0,0,0)" />
+  <path d="M 346 141 L 600 141" fill="none" stroke="rgb(0,0,0)" />
+  <rect fill="rgb(208,208,208)" height="21" stroke="rgb(0,0,0)" width="53" x="293" y="129" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="33" x="319.5" y="146">失敗例</text>
+</svg>
+</div>
+<div><svg height="657" viewBox="0 0 640 657" width="640" xmlns="http://www.w3.org/2000/svg" xmlns:inkspace="http://www.inkscape.org/namespaces/inkscape" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <defs id="defs_block">
+    <filter height="1.504" id="filter_blur" inkspace:collect="always" width="1.1575" x="-0.07875" y="-0.252">
+      <feGaussianBlur id="feGaussianBlur3780" inkspace:collect="always" stdDeviation="4.2" />
+    </filter>
+  </defs>
+  <title>blockdiag</title>
+  <desc />
+  <rect fill="rgb(0,0,0)" height="40" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" width="128" x="67" y="46" />
+  <rect fill="rgb(0,0,0)" height="40" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" width="128" x="259" y="46" />
+  <rect fill="rgb(0,0,0)" height="40" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" width="128" x="451" y="46" />
+  <path d="M 128 80 L 128 645" fill="none" stroke="rgb(0,0,0)" stroke-dasharray="8 4" />
+  <path d="M 320 80 L 320 645" fill="none" stroke="rgb(0,0,0)" stroke-dasharray="8 4" />
+  <path d="M 512 80 L 512 645" fill="none" stroke="rgb(0,0,0)" stroke-dasharray="8 4" />
+  <rect fill="rgb(255,255,255)" height="40" stroke="rgb(0,0,0)" width="128" x="64" y="40" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="34" x="128.0" y="66">Power</text>
+  <rect fill="rgb(255,255,255)" height="40" stroke="rgb(0,0,0)" width="128" x="256" y="40" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="44" x="320.0" y="66">MicomA</text>
+  <rect fill="rgb(255,255,255)" height="40" stroke="rgb(0,0,0)" width="128" x="448" y="40" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="44" x="512.0" y="66">MicomB</text>
+  <path d="M 136 216 L 312 216" fill="none" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="304,212 312,216 304,220" stroke="rgb(0,0,0)" />
+  <path d="M 136 282 L 504 282" fill="none" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="496,278 504,282 496,286" stroke="rgb(0,0,0)" />
+  <path d="M 328 349 L 416 349" fill="none" stroke="rgb(0,0,0)" />
+  <path d="M 416 349 L 416 365" fill="none" stroke="rgb(0,0,0)" />
+  <path d="M 416 365 L 328 365" fill="none" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="336,361 328,365 336,369" stroke="rgb(0,0,0)" />
+  <path d="M 520 432 L 600 432" fill="none" stroke="rgb(0,0,0)" />
+  <path d="M 600 432 L 600 448" fill="none" stroke="rgb(0,0,0)" />
+  <path d="M 600 448 L 520 448" fill="none" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="528,444 520,448 528,452" stroke="rgb(0,0,0)" />
+  <path d="M 328 515 L 504 515" fill="none" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="336,511 328,515 336,519" stroke="rgb(0,0,0)" />
+  <path d="M 328 583 L 504 583" fill="none" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="496,579 504,583 496,587" stroke="rgb(0,0,0)" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="54" x="167.0" y="214">Power ON</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="54" x="167.0" y="280">Power ON</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="44" x="350.0" y="347">起動完了</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="44" x="542.0" y="430">起動完了</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="66" x="471.0" y="513">起動完了通知</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="77" x="370.5" y="581">メッセージ送信</text>
+  <path d="M 40 137 L 293 137" fill="none" stroke="rgb(0,0,0)" />
+  <path d="M 40 141 L 293 141" fill="none" stroke="rgb(0,0,0)" />
+  <path d="M 346 137 L 600 137" fill="none" stroke="rgb(0,0,0)" />
+  <path d="M 346 141 L 600 141" fill="none" stroke="rgb(0,0,0)" />
+  <rect fill="rgb(208,208,208)" height="21" stroke="rgb(0,0,0)" width="53" x="293" y="129" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="33" x="319.5" y="146">成功例</text>
+</svg>
+</div>
+<div class="line-block">
+<div class="line">よくある対策は以下の二つである。</div>
+</div>
+<ul>
+<li><p>絶対に起動が遅いことが確実な方が先に通信を送る。</p></li>
+<li><dl>
+<dt><a class="reference internal" href="../../glossary/embedded.html#lowactive"><span class="std std-ref">LowActive</span></a> で通知する。</dt><dd><div class="line-block">
+<div class="line">大抵こちらの方が確実なのでこちらが使用される印象が強い。</div>
+</div>
+</dd>
+</dl>
+</li>
+</ul>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+        </div>
+        <div class="sidebar">
+          
+          <h3>目次</h3>
+          <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../development_flow/index.html">開発の流れ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../glossary/index.html">用語集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../hard/index.html">ハード</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">ソフト</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tools/index.html">Tools</a></li>
+</ul>
+
+          <div role="search">
+            <h3 style="margin-top: 1.5em;">検索</h3>
+            <form class="search" action="../../search.html" method="get">
+                <input type="text" name="q" />
+                <input type="submit" value="検索" />
+            </form>
+          </div>
+
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          <div role="navigation" aria-label="related navigaton">
+            <a href="detection.html" title="検知手法"
+              >前へ</a> |
+            <a href="../system/index.html" title="システム構造"
+              >次へ</a> |
+            <a href="../../genindex.html" title="総合索引"
+              >索引</a>
+          </div>
+          <div role="note" aria-label="source link">
+              <br/>
+              <a href="../../_sources/soft/pattern/notification.rst.txt"
+                rel="nofollow">ソースコードを表示</a>
+          </div>
+        </div>
+
+        <div class="right">
+          
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, TCS_Himeji.
+      このドキュメントは <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.4 で生成しました。
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+  </body>
+</html>

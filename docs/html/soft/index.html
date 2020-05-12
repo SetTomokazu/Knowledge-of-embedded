@@ -1,0 +1,177 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <title>ソフト &#8212; KnowledgeOfEmbedded 0.0.1 ドキュメント</title>
+    <link rel="stylesheet" href="../_static/agogo.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/translations.js"></script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="next" title="異常系" href="abnormalsystem/index.html" />
+    <link rel="prev" title="UART通信制御レジスタ" href="../hard/micom/port/peripherals/uart.html" /> 
+  </head><body>
+    <div class="header-wrapper" role="banner">
+      <div class="header">
+        <div class="headertitle"><a
+          href="../index.html">KnowledgeOfEmbedded 0.0.1 ドキュメント</a></div>
+        <div class="rel" role="navigation" aria-label="related navigation">
+          <a href="../hard/micom/port/peripherals/uart.html" title="UART通信制御レジスタ"
+             accesskey="P">前へ</a> |
+          <a href="abnormalsystem/index.html" title="異常系"
+             accesskey="N">次へ</a> |
+          <a href="../genindex.html" title="総合索引"
+             accesskey="I">索引</a>
+        </div>
+       </div>
+    </div>
+
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="document">
+            
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="id1">
+<h1>ソフト<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="line-block">
+<div class="line">組み込みに使用されるソフトの概要を示す。</div>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="abnormalsystem/index.html">異常系</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="abnormalsystem/detection.html">検知</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="build_result/index.html">ビルド出力物</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="build_result/hexfile.html">HEXファイル</a></li>
+<li class="toctree-l2"><a class="reference internal" href="build_result/mapfile.html">MAPファイル</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="coding/index.html">C言語</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="coding/alignment.html">Alignment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="coding/bit.html">bit演算</a></li>
+<li class="toctree-l2"><a class="reference internal" href="coding/buffer.html">bufferの使い方</a></li>
+<li class="toctree-l2"><a class="reference internal" href="coding/buffer.html#ring-buffer">ring buffer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="coding/diei.html">DI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="coding/diei.html#ei">EI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="coding/endian.html">Endian</a></li>
+<li class="toctree-l2"><a class="reference internal" href="coding/interruput_func.html">割り込み関数</a></li>
+<li class="toctree-l2"><a class="reference internal" href="coding/lifecycle.html">ライフサイクル</a></li>
+<li class="toctree-l2"><a class="reference internal" href="coding/nop.html">NOP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="coding/pointer.html">Pointer(ポインタ)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="coding/pointer.html#null">NULL</a></li>
+<li class="toctree-l2"><a class="reference internal" href="coding/pointer.html#function-pointer">Function Pointer(関数ポインタ)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="coding/pragma.html">pragma</a></li>
+<li class="toctree-l2"><a class="reference internal" href="coding/standard_library.html">標準ライブラリ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="coding/standard_library.html#memset-memcpy-memcmp">memset,memcpy,memcmp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="coding/standard_library.html#sizeof">sizeof</a></li>
+<li class="toctree-l2"><a class="reference internal" href="coding/struct.html">struct(構造体)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="coding/switch.html">switch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="coding/type.html">型</a></li>
+<li class="toctree-l2"><a class="reference internal" href="coding/union.html">union(共用体)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="coding/variable.html">変数</a></li>
+<li class="toctree-l2"><a class="reference internal" href="coding/vectortable.html">Vector Table(ベクタテーブル)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="coding/volatile.html">volatile</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="communication/index.html">通信制御</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="communication/index.html#id2">概要</a></li>
+<li class="toctree-l2"><a class="reference internal" href="communication/index.html#id3">内容</a></li>
+<li class="toctree-l2"><a class="reference internal" href="communication/index.html#id4">通信メッセージの容量不足</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="environment/index.html">開発環境</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="environment/builder.html">Builder(ビルダ)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="environment/compiler.html">Compiler(コンパイラ)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="environment/debugger.html">Debugger(デバッガ)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="environment/ide.html">IDE(統合開発環境)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="environment/linker.html">Linker(リンカ)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="pattern/index.html">パターン</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pattern/detection.html">検知手法</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pattern/detection.html#id5">割り込み検知</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pattern/notification.html">状態通知</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="system/index.html">システム構造</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="system/driver/index.html">Driver(ドライバ)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="system/os/index.html">OS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="system/task/index.html">Task(タスク)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="version_up/index.html">バージョンアップ</a></li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+        </div>
+        <div class="sidebar">
+          
+          <h3>目次</h3>
+          <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../development_flow/index.html">開発の流れ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary/index.html">用語集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../hard/index.html">ハード</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">ソフト</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html">Tools</a></li>
+</ul>
+
+          <div role="search">
+            <h3 style="margin-top: 1.5em;">検索</h3>
+            <form class="search" action="../search.html" method="get">
+                <input type="text" name="q" />
+                <input type="submit" value="検索" />
+            </form>
+          </div>
+
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          <div role="navigation" aria-label="related navigaton">
+            <a href="../hard/micom/port/peripherals/uart.html" title="UART通信制御レジスタ"
+              >前へ</a> |
+            <a href="abnormalsystem/index.html" title="異常系"
+              >次へ</a> |
+            <a href="../genindex.html" title="総合索引"
+              >索引</a>
+          </div>
+          <div role="note" aria-label="source link">
+              <br/>
+              <a href="../_sources/soft/index.rst.txt"
+                rel="nofollow">ソースコードを表示</a>
+          </div>
+        </div>
+
+        <div class="right">
+          
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, TCS_Himeji.
+      このドキュメントは <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.4 で生成しました。
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+  </body>
+</html>

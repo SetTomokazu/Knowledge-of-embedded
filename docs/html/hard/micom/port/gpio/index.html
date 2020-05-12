@@ -1,0 +1,156 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <title>GPIO &#8212; KnowledgeOfEmbedded 0.0.1 ドキュメント</title>
+    <link rel="stylesheet" href="../../../../_static/agogo.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+    <script src="../../../../_static/jquery.js"></script>
+    <script src="../../../../_static/underscore.js"></script>
+    <script src="../../../../_static/doctools.js"></script>
+    <script src="../../../../_static/language_data.js"></script>
+    <script src="../../../../_static/translations.js"></script>
+    <link rel="index" title="索引" href="../../../../genindex.html" />
+    <link rel="search" title="検索" href="../../../../search.html" />
+    <link rel="next" title="ペリフェラル" href="../peripherals/index.html" />
+    <link rel="prev" title="ポート" href="../index.html" /> 
+  </head><body>
+    <div class="header-wrapper" role="banner">
+      <div class="header">
+        <div class="headertitle"><a
+          href="../../../../index.html">KnowledgeOfEmbedded 0.0.1 ドキュメント</a></div>
+        <div class="rel" role="navigation" aria-label="related navigation">
+          <a href="../index.html" title="ポート"
+             accesskey="P">前へ</a> |
+          <a href="../peripherals/index.html" title="ペリフェラル"
+             accesskey="N">次へ</a> |
+          <a href="../../../../genindex.html" title="総合索引"
+             accesskey="I">索引</a>
+        </div>
+       </div>
+    </div>
+
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="document">
+            
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="gpio">
+<span id="index-0"></span><span id="id1"></span><h1>GPIO<a class="headerlink" href="#gpio" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="line-block">
+<div class="line">汎用入出力 &quot;General-purpose input/output&quot;の略。</div>
+</div>
+<div class="section" id="id2">
+<h2>機能<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<ul class="simple">
+<li><p>入力の場合、端子の電圧値がHighかLowかを取得する</p></li>
+<li><p>出力の場合、端子からHighかLowを出力する。</p></li>
+</ul>
+</div>
+<div class="section" id="id3">
+<h2>よくあるレジスタ<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="section" id="id4">
+<h3>ダイレクションレジスタ<a class="headerlink" href="#id4" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="line-block">
+<div class="line">GPIOの入出力方向を指定するレジスタ。</div>
+<div class="line">大体リセット後の初期値は入力のはずである。</div>
+</div>
+</div>
+<div class="section" id="id5">
+<h3>データレジスタ<a class="headerlink" href="#id5" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="line-block">
+<div class="line">出力の場合、端子から出力する値を指定するレジスタ。</div>
+<div class="line">該当するbitに0を書き込むとLow出力、1を書き込むとHigh出力となる。</div>
+</div>
+</div>
+<div class="section" id="id6">
+<h3>リードレジスタ<a class="headerlink" href="#id6" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="line-block">
+<div class="line">端子が接続されている線の値を取得するレジスタ。</div>
+<div class="line">入出力どちらの時も、現在の値を取得するならこれを使用する。</div>
+<div class="line">該当するbitが0の場合Low、1の場合Highである。</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<div class="line-block">
+<div class="line">出力の場合、データレジスタに設定して出力しているつもりの値と実際の値が異なる可能性がある。</div>
+<div class="line">例えば端子を地絡させている状態でHighを出力しても端子電圧値はLowになる。</div>
+<div class="line">この場合データレジスタでは1、リードレジスタでは0となる為、どちらの値が欲しいのかを検討すること。</div>
+</div>
+</div>
+</div>
+<div class="section" id="id7">
+<h3>機能レジスタ<a class="headerlink" href="#id7" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="line-block">
+<div class="line">端子を <a class="reference internal" href="#gpio"><span class="std std-ref">GPIO</span></a> として使用するか、 <a class="reference internal" href="../peripherals/index.html#id1"><span class="std std-ref">ペリフェラル</span></a> として使用するかを指定するレジスタ。</div>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+        </div>
+        <div class="sidebar">
+          
+          <h3>目次</h3>
+          <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../../development_flow/index.html">開発の流れ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../glossary/index.html">用語集</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../index.html">ハード</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../soft/index.html">ソフト</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tools/index.html">Tools</a></li>
+</ul>
+
+          <div role="search">
+            <h3 style="margin-top: 1.5em;">検索</h3>
+            <form class="search" action="../../../../search.html" method="get">
+                <input type="text" name="q" />
+                <input type="submit" value="検索" />
+            </form>
+          </div>
+
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          <div role="navigation" aria-label="related navigaton">
+            <a href="../index.html" title="ポート"
+              >前へ</a> |
+            <a href="../peripherals/index.html" title="ペリフェラル"
+              >次へ</a> |
+            <a href="../../../../genindex.html" title="総合索引"
+              >索引</a>
+          </div>
+          <div role="note" aria-label="source link">
+              <br/>
+              <a href="../../../../_sources/hard/micom/port/gpio/index.rst.txt"
+                rel="nofollow">ソースコードを表示</a>
+          </div>
+        </div>
+
+        <div class="right">
+          
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, TCS_Himeji.
+      このドキュメントは <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.4 で生成しました。
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+  </body>
+</html>

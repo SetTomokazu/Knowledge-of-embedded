@@ -1,0 +1,355 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <title>Pointer(ポインタ) &#8212; KnowledgeOfEmbedded 0.0.1 ドキュメント</title>
+    <link rel="stylesheet" href="../../_static/agogo.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../_static/translations.js"></script>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="検索" href="../../search.html" />
+    <link rel="next" title="pragma" href="pragma.html" />
+    <link rel="prev" title="NOP" href="nop.html" /> 
+  </head><body>
+    <div class="header-wrapper" role="banner">
+      <div class="header">
+        <div class="headertitle"><a
+          href="../../index.html">KnowledgeOfEmbedded 0.0.1 ドキュメント</a></div>
+        <div class="rel" role="navigation" aria-label="related navigation">
+          <a href="nop.html" title="NOP"
+             accesskey="P">前へ</a> |
+          <a href="pragma.html" title="pragma"
+             accesskey="N">次へ</a> |
+          <a href="../../genindex.html" title="総合索引"
+             accesskey="I">索引</a>
+        </div>
+       </div>
+    </div>
+
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="document">
+            
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="pointer">
+<span id="id1"></span><span id="index-0"></span><h1>Pointer(ポインタ)<a class="headerlink" href="#pointer" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="line-block">
+<div class="line">ポインタは組み込みでなんだかんだ使用される。</div>
+<div class="line">その扱いと特性について再度理解しておく。</div>
+</div>
+</div>
+<div class="section" id="null">
+<span id="index-1"></span><span id="id2"></span><h1>NULL<a class="headerlink" href="#null" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="line-block">
+<div class="line">NULLポインタであるが、これを組み込みで使用する場合少々厄介なことになる</div>
+<div class="line">NULLポインタと言うが、これはポインタの指し示すアドレスが0であるだけである。</div>
+<div class="line">そして、マイコンのアドレス空間によっては、アドレス0に変数や関数が普通に存在する場合がある。</div>
+<div class="line">その場合、正常なのにNULLチェックで弾かれる可能性があるため、注意しよう。</div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">警告</p>
+<p>NULLポインタであるアドレス0番地がアドレスとして正常の場合がある</p>
+</div>
+</div>
+<div class="section" id="function-pointer">
+<span id="id3"></span><span id="index-2"></span><h1>Function Pointer(関数ポインタ)<a class="headerlink" href="#function-pointer" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="line-block">
+<div class="line">なんだかんだ使用されるのがこの関数ポインタである。</div>
+<div class="line">規模が大きい開発になると、理解や制御を簡単にするために一定の構造化を行うのは常套手段である。</div>
+<div class="line">以下に <a class="reference internal" href="../system/task/index.html#task"><span class="std std-ref">Task(タスク)</span></a> のインターフェースを構造化した際の記述例を示す。</div>
+</div>
+<p><code class="xref download docutils literal notranslate"><span class="pre">プロジェクト一式Download</span></code></p>
+<div class="literal-block-wrapper docutils container" id="id4">
+<div class="code-block-caption"><span class="caption-text">Common.h</span><a class="headerlink" href="#id4" title="このコードへのパーマリンク">¶</a></div>
+<div class="highlight-c notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="cp">#ifndef __COMMON_H__</span>
+<span class="cp">#define __COMMON_H__</span>
+
+<span class="cm">/* Project共通Header */</span>
+<span class="k">typedef</span> <span class="k">struct</span> <span class="p">{</span>
+    <span class="kt">void</span> <span class="p">(</span><span class="o">*</span><span class="n">Init</span><span class="p">)(</span><span class="kt">void</span><span class="p">);</span> <span class="cm">/* 初期化処理   */</span>
+    <span class="kt">void</span> <span class="p">(</span><span class="o">*</span><span class="n">Main</span><span class="p">)(</span><span class="kt">void</span><span class="p">);</span> <span class="cm">/* メイン処理   */</span>
+    <span class="kt">void</span> <span class="p">(</span><span class="o">*</span><span class="n">Term</span><span class="p">)(</span><span class="kt">void</span><span class="p">);</span> <span class="cm">/* 終了処理     */</span>
+<span class="p">}</span> <span class="n">ITask_t</span><span class="p">;</span>
+
+<span class="cp">#endif</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="literal-block-wrapper docutils container" id="id5">
+<div class="code-block-caption"><span class="caption-text">TaskA.h</span><a class="headerlink" href="#id5" title="このコードへのパーマリンク">¶</a></div>
+<div class="highlight-c notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="cp">#ifndef __TASK_A_H__	</span><span class="cm">/* 多重参照防止用の定型文 */</span><span class="cp"></span>
+<span class="cp">#define __TASK_A_H__	</span><span class="cm">/* 多重参照防止用の定型文 */</span><span class="cp"></span>
+
+<span class="cm">/* 同名のCソースファイルではexternを使用しないようにする定型文 */</span>
+<span class="cp">#ifdef __TASK_A_C__</span>
+<span class="cp">#define EXTERN</span>
+<span class="cp">#else</span>
+<span class="cp">#define EXTERN extern</span>
+<span class="cp">#endif</span>
+
+<span class="cp">#include</span> <span class="cpf">&quot;Common.h&quot;</span><span class="cp"></span>
+
+<span class="n">EXTERN</span> <span class="n">ITask_t</span> <span class="n">Task_A</span><span class="p">;</span>
+
+<span class="cp">#endif					</span><span class="cm">/* 多重参照防止用の定型文 */</span><span class="cp"></span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="literal-block-wrapper docutils container" id="id6">
+<div class="code-block-caption"><span class="caption-text">TaskA.c</span><a class="headerlink" href="#id6" title="このコードへのパーマリンク">¶</a></div>
+<div class="highlight-c notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="cp">#define __TASK_A_C__	</span><span class="cm">/* ヘッダに対し、参照しているCソースファイルを教える為の定義 */</span><span class="cp"></span>
+
+<span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;TaskA.h&quot;</span><span class="cp"></span>
+
+<span class="kt">void</span> <span class="nf">TaskA_Init</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span>
+<span class="kt">void</span> <span class="nf">TaskA_Main</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span>
+<span class="kt">void</span> <span class="nf">TaskA_Term</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span>
+
+<span class="n">ITask_t</span> <span class="n">Task_A</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">TaskA_Init</span><span class="p">,</span>
+    <span class="n">TaskA_Main</span><span class="p">,</span>
+    <span class="n">TaskA_Term</span>
+<span class="p">};</span>
+
+<span class="kt">void</span> <span class="nf">TaskA_Init</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
+	<span class="n">printf</span><span class="p">(</span><span class="s">&quot;%s</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="s">&quot;Init TaskA&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="kt">void</span> <span class="nf">TaskA_Main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
+	<span class="n">printf</span><span class="p">(</span><span class="s">&quot;%s</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="s">&quot;Do TaskA&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="kt">void</span> <span class="nf">TaskA_Term</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
+	<span class="n">printf</span><span class="p">(</span><span class="s">&quot;%s</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="s">&quot;Term TaskA&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="literal-block-wrapper docutils container" id="id7">
+<div class="code-block-caption"><span class="caption-text">Scheduler.c</span><a class="headerlink" href="#id7" title="このコードへのパーマリンク">¶</a></div>
+<div class="highlight-c notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;time.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;conio.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;Common.h&quot;</span><span class="cp"></span>
+
+<span class="cp">#include</span> <span class="cpf">&quot;TaskA.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;TaskB.h&quot;</span><span class="cp"></span>
+
+<span class="n">ITask_t</span><span class="o">*</span> <span class="n">tasklist</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="o">&amp;</span><span class="n">Task_A</span><span class="p">,</span>
+    <span class="o">&amp;</span><span class="n">Task_B</span>
+<span class="p">};</span>
+
+<span class="cp">#define TASK_MAX (sizeof(tasklist) / sizeof(ITask_t*))</span>
+<span class="cp">#define TASK_SPAN   1   </span><span class="cm">/* タスク実行間隔[s] */</span><span class="cp"></span>
+
+<span class="kt">int</span> <span class="nf">IsTimeout</span><span class="p">(</span><span class="kt">time_t</span><span class="o">*</span> <span class="n">past</span><span class="p">,</span> <span class="kt">double</span> <span class="n">span</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">result</span><span class="p">;</span>
+    <span class="kt">time_t</span> <span class="n">tmp</span> <span class="o">=</span> <span class="n">time</span><span class="p">(</span><span class="nb">NULL</span><span class="p">);</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="p">(</span><span class="n">span</span> <span class="o">&lt;=</span> <span class="n">difftime</span><span class="p">(</span><span class="n">tmp</span><span class="p">,</span> <span class="o">*</span><span class="n">past</span><span class="p">));</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">result</span><span class="p">){</span>
+        <span class="o">*</span><span class="n">past</span> <span class="o">=</span> <span class="n">tmp</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">result</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
+    <span class="kt">time_t</span> <span class="n">past</span><span class="p">;</span>
+    <span class="cm">/* 全タスク初期化処理 */</span>
+    <span class="n">past</span> <span class="o">=</span> <span class="n">time</span><span class="p">(</span><span class="nb">NULL</span><span class="p">);</span>
+    <span class="k">for</span><span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">TASK_MAX</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="p">((</span><span class="o">*</span><span class="n">tasklist</span><span class="p">[</span><span class="n">i</span><span class="p">]).</span><span class="n">Init</span><span class="p">)();</span>
+    <span class="p">}</span>
+    <span class="cm">/* 全タスクの通常動作実行 */</span>
+    <span class="k">while</span><span class="p">(</span><span class="o">!</span><span class="n">kbhit</span><span class="p">())</span> <span class="p">{</span>
+        <span class="k">for</span><span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">TASK_MAX</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+            <span class="p">((</span><span class="o">*</span><span class="n">tasklist</span><span class="p">[</span><span class="n">i</span><span class="p">]).</span><span class="n">Main</span><span class="p">)();</span>
+        <span class="p">}</span>
+        <span class="k">while</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+            <span class="cm">/*TASK_SPAN[s]待つための処理*/</span>
+            <span class="cm">/* 実際はRTC等を使用するがWindowsでないので暫定的に */</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">IsTimeout</span><span class="p">(</span><span class="o">&amp;</span><span class="n">past</span><span class="p">,</span> <span class="n">TASK_SPAN</span><span class="p">))</span> <span class="p">{</span>
+                <span class="k">break</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="cm">/* 全タスク終了処理 */</span>
+    <span class="k">for</span><span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">TASK_MAX</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="p">((</span><span class="o">*</span><span class="n">tasklist</span><span class="p">[</span><span class="n">i</span><span class="p">]).</span><span class="n">Term</span><span class="p">)();</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+        </div>
+        <div class="sidebar">
+          
+          <h3>目次</h3>
+          <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../development_flow/index.html">開発の流れ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../glossary/index.html">用語集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../hard/index.html">ハード</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">ソフト</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tools/index.html">Tools</a></li>
+</ul>
+
+          <div role="search">
+            <h3 style="margin-top: 1.5em;">検索</h3>
+            <form class="search" action="../../search.html" method="get">
+                <input type="text" name="q" />
+                <input type="submit" value="検索" />
+            </form>
+          </div>
+
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          <div role="navigation" aria-label="related navigaton">
+            <a href="nop.html" title="NOP"
+              >前へ</a> |
+            <a href="pragma.html" title="pragma"
+              >次へ</a> |
+            <a href="../../genindex.html" title="総合索引"
+              >索引</a>
+          </div>
+          <div role="note" aria-label="source link">
+              <br/>
+              <a href="../../_sources/soft/coding/pointer.rst.txt"
+                rel="nofollow">ソースコードを表示</a>
+          </div>
+        </div>
+
+        <div class="right">
+          
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, TCS_Himeji.
+      このドキュメントは <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.4 で生成しました。
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+  </body>
+</html>

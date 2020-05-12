@@ -1,0 +1,158 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <title>volatile &#8212; KnowledgeOfEmbedded 0.0.1 ドキュメント</title>
+    <link rel="stylesheet" href="../../_static/agogo.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../_static/translations.js"></script>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="検索" href="../../search.html" />
+    <link rel="next" title="【CT】単体試験" href="../../development_flow/4-CT/index.html" />
+    <link rel="prev" title="Vector Table(ベクタテーブル)" href="vectortable.html" /> 
+  </head><body>
+    <div class="header-wrapper" role="banner">
+      <div class="header">
+        <div class="headertitle"><a
+          href="../../index.html">KnowledgeOfEmbedded 0.0.1 ドキュメント</a></div>
+        <div class="rel" role="navigation" aria-label="related navigation">
+          <a href="vectortable.html" title="Vector Table(ベクタテーブル)"
+             accesskey="P">前へ</a> |
+          <a href="../../development_flow/4-CT/index.html" title="【CT】単体試験"
+             accesskey="N">次へ</a> |
+          <a href="../../genindex.html" title="総合索引"
+             accesskey="I">索引</a>
+        </div>
+       </div>
+    </div>
+
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="document">
+            
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="volatile">
+<span id="index-0"></span><span id="id1"></span><h1>volatile<a class="headerlink" href="#volatile" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="line-block">
+<div class="line">コンパイルする際のオプションで最適化というものがある。</div>
+<div class="line">これはアセンブラレベルでのソースの簡略化や共通化によってコード量を減らしたり高速化したりすることである。</div>
+<div class="line">尚それをされると非常に面倒なことがあったりする。</div>
+<div class="line">組み込み開発でソースの簡略化による影響で大きいものを二つ紹介する。</div>
+</div>
+<dl>
+<dt><strong>配列や構造体の簡略化</strong></dt><dd><div class="line-block">
+<div class="line">連続して同じ値が入っているテーブルが簡略化され、それ以降の配置が詰められたり</div>
+<div class="line">構造体で未使用のメンバを削除されたりする。</div>
+<div class="line"><a class="reference internal" href="vectortable.html#id1"><span class="std std-ref">Vector Table(ベクタテーブル)</span></a> 等は、そのメモリアドレスに配置されている事自体が重要である為、</div>
+<div class="line">そういった事に絡む定義は悉くvolatileが使用されている。</div>
+</div>
+</dd>
+<dt><strong>ソースの不要処理削除</strong></dt><dd><div class="line-block">
+<div class="line">大抵のレジスタは値をWriteすればその瞬間からその通り動作する。</div>
+<div class="line">しかし、一部のレジスタはそれだけではすぐに反映されないものがある。</div>
+<div class="line">そういったレジスタは、反映させるにはReadしてソフトで使用しなさいと指示がある物がある。</div>
+<div class="line">その記述は例えば以下の様になり、ソースだけ見ると目的が分からない記述になる。</div>
+</div>
+<div class="highlight-c notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">volatile</span> <span class="kt">void</span> <span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">unsigned</span> <span class="kt">char</span> <span class="n">tmp</span><span class="p">;</span>
+
+    <span class="n">hoge_Data_Register</span> <span class="o">=</span> <span class="mh">0xA5</span><span class="p">;</span>  <span class="cm">/* レジスタに値Write */</span>
+
+    <span class="n">tmp</span> <span class="o">=</span> <span class="n">hoge_Data_Register</span><span class="p">;</span>   <span class="cm">/* レジスタ値をRead */</span>
+    <span class="n">tmp</span> <span class="o">=</span> <span class="n">tmp</span><span class="p">;</span>                  <span class="cm">/*  ...んん? */</span>
+
+    <span class="cm">/* それ以降の処理... */</span>
+
+<span class="p">}</span>
+</pre></div>
+</td></tr></table></div>
+<div class="line-block">
+<div class="line">tmpにレジスタの値を読み込んでいるが、7行目のtmp = tmpで特に何もしておらず、それ以降もtmpは使用されない。</div>
+<div class="line">これに最適化がかかると、まず7行目が不要行として削除される可能性がある。</div>
+<div class="line">そして、読み込んだデータを使用しなくなる為6行目も削除される可能性がある。</div>
+<div class="line">この簡略化を防ぐために、こういったレジスタを制御する関数にもvolatileが使用される。</div>
+</div>
+</dd>
+</dl>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+        </div>
+        <div class="sidebar">
+          
+          <h3>目次</h3>
+          <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../development_flow/index.html">開発の流れ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../glossary/index.html">用語集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../hard/index.html">ハード</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">ソフト</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tools/index.html">Tools</a></li>
+</ul>
+
+          <div role="search">
+            <h3 style="margin-top: 1.5em;">検索</h3>
+            <form class="search" action="../../search.html" method="get">
+                <input type="text" name="q" />
+                <input type="submit" value="検索" />
+            </form>
+          </div>
+
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          <div role="navigation" aria-label="related navigaton">
+            <a href="vectortable.html" title="Vector Table(ベクタテーブル)"
+              >前へ</a> |
+            <a href="../../development_flow/4-CT/index.html" title="【CT】単体試験"
+              >次へ</a> |
+            <a href="../../genindex.html" title="総合索引"
+              >索引</a>
+          </div>
+          <div role="note" aria-label="source link">
+              <br/>
+              <a href="../../_sources/soft/coding/volatile.rst.txt"
+                rel="nofollow">ソースコードを表示</a>
+          </div>
+        </div>
+
+        <div class="right">
+          
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, TCS_Himeji.
+      このドキュメントは <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.4 で生成しました。
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+  </body>
+</html>

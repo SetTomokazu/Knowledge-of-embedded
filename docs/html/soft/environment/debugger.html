@@ -1,0 +1,165 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <title>Debugger(デバッガ) &#8212; KnowledgeOfEmbedded 0.0.1 ドキュメント</title>
+    <link rel="stylesheet" href="../../_static/agogo.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../_static/translations.js"></script>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="検索" href="../../search.html" />
+    <link rel="next" title="IDE(統合開発環境)" href="ide.html" />
+    <link rel="prev" title="Compiler(コンパイラ)" href="compiler.html" /> 
+  </head><body>
+    <div class="header-wrapper" role="banner">
+      <div class="header">
+        <div class="headertitle"><a
+          href="../../index.html">KnowledgeOfEmbedded 0.0.1 ドキュメント</a></div>
+        <div class="rel" role="navigation" aria-label="related navigation">
+          <a href="compiler.html" title="Compiler(コンパイラ)"
+             accesskey="P">前へ</a> |
+          <a href="ide.html" title="IDE(統合開発環境)"
+             accesskey="N">次へ</a> |
+          <a href="../../genindex.html" title="総合索引"
+             accesskey="I">索引</a>
+        </div>
+       </div>
+    </div>
+
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="document">
+            
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="debugger">
+<span id="index-0"></span><span id="id1"></span><h1>Debugger(デバッガ)<a class="headerlink" href="#debugger" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="../../glossary/embedded.html#ice"><span class="std std-ref">ICE</span></a> で実機に接続した際に使用する。</div>
+<div class="line">色々と共通の機能がある為紹介する。</div>
+</div>
+<div class="section" id="id2">
+<span id="index-1"></span><span id="id3"></span><h2>混合表示<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="line-block">
+<div class="line">Cソースと、機械語翻訳結果のアセンブラを混合して表示する機能。</div>
+<div class="line">静的解析で指摘された場合、正常に動作する事を証明する為に動作を確認したりする。</div>
+<div class="line">コンパイラがどのように翻訳するのかを知る為の分かり易い手助けになる為暇があれば見ることを推奨する。</div>
+<div class="line">尚、実機デバッグ中でないと基本表示されない。</div>
+</div>
+</div>
+<div class="section" id="watch">
+<span id="index-2"></span><span id="id4"></span><h2>Watch<a class="headerlink" href="#watch" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="line-block">
+<div class="line">変数を監視することをそのままWatchという。</div>
+<div class="line">ここに入るのは基本的にグローバル変数である。</div>
+<div class="line">それはグローバル変数は常に同じ領域を占有しているためである。</div>
+<div class="line">ローカル変数は呼ばれるたびにSTACK領域に確保される為、</div>
+<div class="line">別の関数実行中に普通に上書きされる。</div>
+<div class="line">その為ローカル変数をWatchする場合はちゃんとその関数が実行中の時に中身を見よう。</div>
+</div>
+</div>
+<div class="section" id="call-stack">
+<span id="index-3"></span><span id="id5"></span><h2>Call Stack<a class="headerlink" href="#call-stack" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="line-block">
+<div class="line">関数がどう呼ばれていったかを示すログ。</div>
+<div class="line">頑張れば <a class="reference internal" href="../coding/vectortable.html#id1"><span class="std std-ref">Vector Table(ベクタテーブル)</span></a> 内のどの割り込み関数がCallされたのかも判別できる。</div>
+</div>
+</div>
+<div class="section" id="break">
+<span id="index-4"></span><span id="id6"></span><h2>Break<a class="headerlink" href="#break" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="line-block">
+<div class="line">デバッグ中に指定の行が実行されそうになったら動作を中断する機能。</div>
+<div class="line">非常に便利なのだがいくつか注意点がある。</div>
+</div>
+<ul>
+<li><dl class="simple">
+<dt>Break中にも割り込みは動作しようとする。</dt><dd><p>設定で「Break中の割込み動作禁止」などという項目がある為必ず確認する事。</p>
+</dd>
+</dl>
+</li>
+<li><dl>
+<dt>デバッグ中のマイコンがBreakしても他のマイコンは動作し続けている。</dt><dd><div class="line-block">
+<div class="line">通信シーケンスと言ったタイミングが絡む動作を確認中にBreakした場合、</div>
+<div class="line">相手がタイムアウトとしてシーケンスを中断する恐れがある。</div>
+<div class="line">その為、シーケンスの過程を <a class="reference internal" href="#watch"><span class="std std-ref">Watch</span></a> で確認するのではなく、ログを出力するようにした方が賢明である。</div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">警告</p>
+<p>外部Watchdogが居る場合、Break中をフリーズと判断してリセットされる為、デバッグ中は動作停止するようにする。</p>
+</div>
+</dd>
+</dl>
+</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+        </div>
+        <div class="sidebar">
+          
+          <h3>目次</h3>
+          <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../development_flow/index.html">開発の流れ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../glossary/index.html">用語集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../hard/index.html">ハード</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">ソフト</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tools/index.html">Tools</a></li>
+</ul>
+
+          <div role="search">
+            <h3 style="margin-top: 1.5em;">検索</h3>
+            <form class="search" action="../../search.html" method="get">
+                <input type="text" name="q" />
+                <input type="submit" value="検索" />
+            </form>
+          </div>
+
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          <div role="navigation" aria-label="related navigaton">
+            <a href="compiler.html" title="Compiler(コンパイラ)"
+              >前へ</a> |
+            <a href="ide.html" title="IDE(統合開発環境)"
+              >次へ</a> |
+            <a href="../../genindex.html" title="総合索引"
+              >索引</a>
+          </div>
+          <div role="note" aria-label="source link">
+              <br/>
+              <a href="../../_sources/soft/environment/debugger.rst.txt"
+                rel="nofollow">ソースコードを表示</a>
+          </div>
+        </div>
+
+        <div class="right">
+          
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, TCS_Himeji.
+      このドキュメントは <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.4 で生成しました。
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+  </body>
+</html>

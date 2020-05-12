@@ -1,0 +1,164 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <title>ADC制御レジスタ &#8212; KnowledgeOfEmbedded 0.0.1 ドキュメント</title>
+    <link rel="stylesheet" href="../../../../_static/agogo.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+    <script src="../../../../_static/jquery.js"></script>
+    <script src="../../../../_static/underscore.js"></script>
+    <script src="../../../../_static/doctools.js"></script>
+    <script src="../../../../_static/language_data.js"></script>
+    <script src="../../../../_static/translations.js"></script>
+    <link rel="index" title="索引" href="../../../../genindex.html" />
+    <link rel="search" title="検索" href="../../../../search.html" />
+    <link rel="next" title="CAN通信制御レジスタ" href="can.html" />
+    <link rel="prev" title="ペリフェラル" href="index.html" /> 
+  </head><body>
+    <div class="header-wrapper" role="banner">
+      <div class="header">
+        <div class="headertitle"><a
+          href="../../../../index.html">KnowledgeOfEmbedded 0.0.1 ドキュメント</a></div>
+        <div class="rel" role="navigation" aria-label="related navigation">
+          <a href="index.html" title="ペリフェラル"
+             accesskey="P">前へ</a> |
+          <a href="can.html" title="CAN通信制御レジスタ"
+             accesskey="N">次へ</a> |
+          <a href="../../../../genindex.html" title="総合索引"
+             accesskey="I">索引</a>
+        </div>
+       </div>
+    </div>
+
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="document">
+            
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="adc">
+<span id="index-0"></span><span id="id1"></span><h1>ADC制御レジスタ<a class="headerlink" href="#adc" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="line-block">
+<div class="line">マイコンに搭載されている <a class="reference internal" href="../../../../glossary/adc.html#adc"><span class="std std-ref">ADC</span></a> を制御する。</div>
+</div>
+<div class="section" id="id2">
+<h2>用途<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="line-block">
+<div class="line">ハード的な異常の監視でよく見かけた。</div>
+<div class="line">電源から供給されている電圧を監視する。</div>
+<div class="line">接続先や電源が不安定になったり、故障したりするとそれ以上の故障の原因になる為、</div>
+<div class="line">電圧値を監視し異常ならば対処する。</div>
+</div>
+</div>
+<div class="section" id="id3">
+<h2>よくあるレジスタ<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="line-block">
+<div class="line">大抵マイコンには複数のADC対応端子とそれと同数のADC制御レジスタがある。</div>
+<div class="line">が、それが0から順番に1対1対応していることは少なかった。</div>
+</div>
+<div class="section" id="id4">
+<h3>データレジスタ<a class="headerlink" href="#id4" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="line-block">
+<div class="line">変換したAD値を格納する。</div>
+<div class="line">分解能はADCのbit数依存</div>
+</div>
+</div>
+<div class="section" id="ad">
+<h3>AD変換方法設定レジスタ<a class="headerlink" href="#ad" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="line-block">
+<div class="line">AD変換を行う方法は見かけたもので以下の通り。</div>
+</div>
+<dl class="simple">
+<dt>タイミング</dt><dd><ul class="simple">
+<li><p>ソフトで指定した時</p></li>
+<li><p>別途RTCを使用し一定周期で</p></li>
+</ul>
+</dd>
+<dt>一度に行うAD変換回数</dt><dd><ul class="simple">
+<li><p>一回だけ</p></li>
+<li><p>連続して指定した回数繰り返し多分平均をとる</p></li>
+</ul>
+</dd>
+</dl>
+</div>
+<div class="section" id="id5">
+<h3>AD変換ステータスレジスタ<a class="headerlink" href="#id5" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="line-block">
+<div class="line">現在のAD変換状況を格納したレジスタ</div>
+<div class="line">取得できるステータスは以下の通り</div>
+</div>
+<ul class="simple">
+<li><p>未動作</p></li>
+<li><p>変換中</p></li>
+<li><p>完了</p></li>
+<li><p>失敗</p></li>
+</ul>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+        </div>
+        <div class="sidebar">
+          
+          <h3>目次</h3>
+          <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../../development_flow/index.html">開発の流れ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../glossary/index.html">用語集</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../index.html">ハード</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../soft/index.html">ソフト</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tools/index.html">Tools</a></li>
+</ul>
+
+          <div role="search">
+            <h3 style="margin-top: 1.5em;">検索</h3>
+            <form class="search" action="../../../../search.html" method="get">
+                <input type="text" name="q" />
+                <input type="submit" value="検索" />
+            </form>
+          </div>
+
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          <div role="navigation" aria-label="related navigaton">
+            <a href="index.html" title="ペリフェラル"
+              >前へ</a> |
+            <a href="can.html" title="CAN通信制御レジスタ"
+              >次へ</a> |
+            <a href="../../../../genindex.html" title="総合索引"
+              >索引</a>
+          </div>
+          <div role="note" aria-label="source link">
+              <br/>
+              <a href="../../../../_sources/hard/micom/port/peripherals/adc.rst.txt"
+                rel="nofollow">ソースコードを表示</a>
+          </div>
+        </div>
+
+        <div class="right">
+          
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, TCS_Himeji.
+      このドキュメントは <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.4 で生成しました。
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+  </body>
+</html>

@@ -1,0 +1,191 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <title>標準ライブラリ &#8212; KnowledgeOfEmbedded 0.0.1 ドキュメント</title>
+    <link rel="stylesheet" href="../../_static/agogo.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../_static/translations.js"></script>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="検索" href="../../search.html" />
+    <link rel="next" title="struct(構造体)" href="struct.html" />
+    <link rel="prev" title="pragma" href="pragma.html" /> 
+  </head><body>
+    <div class="header-wrapper" role="banner">
+      <div class="header">
+        <div class="headertitle"><a
+          href="../../index.html">KnowledgeOfEmbedded 0.0.1 ドキュメント</a></div>
+        <div class="rel" role="navigation" aria-label="related navigation">
+          <a href="pragma.html" title="pragma"
+             accesskey="P">前へ</a> |
+          <a href="struct.html" title="struct(構造体)"
+             accesskey="N">次へ</a> |
+          <a href="../../genindex.html" title="総合索引"
+             accesskey="I">索引</a>
+        </div>
+       </div>
+    </div>
+
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="document">
+            
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="id1">
+<span id="index-0"></span><span id="id2"></span><h1>標準ライブラリ<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="line-block">
+<div class="line">C言語でお馴染みの標準ライブラリだが、組み込みでは基本的に非推奨となっている。</div>
+<div class="line">大雑把な理由としてはどういう実装で動いているかが把握できない為である。</div>
+<div class="line">特にマイコンの開発環境で使用する標準ライブラリはコンパイラ依存の為当然開発環境に依存する。</div>
+<div class="line">その為同名の関数でも実装方法が異なる恐れがあり、その違いで不具合が発生した場合の責任の所在が無い。</div>
+<div class="line">無いと結局使った本人の責任になる。</div>
+<div class="line">その為の非推奨である。</div>
+<div class="line">使いたければ自力で実装しましょう。</div>
+</div>
+</div>
+<div class="section" id="memset-memcpy-memcmp">
+<span id="memcmp"></span><span id="memcpy"></span><span id="memset"></span><span id="index-1"></span><h1>memset,memcpy,memcmp<a class="headerlink" href="#memset-memcpy-memcmp" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="line-block">
+<div class="line">おそらく初期化などで最も使用される標準関数である。</div>
+<div class="line">が、内部の動作が非常に怪しいと専らの噂である。</div>
+<div class="line">一番の問題は「サイズが4の倍数でない場合、端数はどのように計算されるのだろうか」である。</div>
+<div class="line">CPUとしてはint型である4byteでデータ取得や比較を行った方が動作が速い</div>
+<div class="line">その為、以下のような中身だった場合、不具合が起こり得る。</div>
+</div>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span> <span class="o">*</span><span class="nf">memcpy</span><span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="n">dst</span><span class="p">,</span> <span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="n">src</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="n">n</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">unsigned</span> <span class="n">i</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="o">*</span><span class="n">d</span> <span class="o">=</span> <span class="n">dst</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="o">*</span><span class="n">s</span> <span class="o">=</span> <span class="n">src</span><span class="p">;</span>
+
+    <span class="k">for</span><span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">;</span> <span class="n">i</span> <span class="o">+=</span><span class="mi">4</span><span class="p">)</span> <span class="p">{</span>
+        <span class="o">*</span><span class="p">(</span><span class="n">dst</span><span class="o">++</span><span class="p">)</span> <span class="o">=</span> <span class="o">*</span><span class="p">(</span><span class="n">src</span><span class="o">++</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">これで引数nが5の場合、0～4byte目まではいいが、5～7byte目は</div>
+</div>
+</div>
+<div class="section" id="sizeof">
+<span id="index-2"></span><span id="id3"></span><h1>sizeof<a class="headerlink" href="#sizeof" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="line-block">
+<div class="line">こいつも信用ならないという説があるがこればっかりは必要であると考える。</div>
+<div class="line">この説が紛糾する原因は全て <a class="reference internal" href="alignment.html#alignment"><span class="std std-ref">Alignment</span></a> と <a class="reference internal" href="alignment.html#id3"><span class="std std-ref">境界値調正</span></a>  にある。</div>
+<div class="line">が、一番の敵は何も考えずに以下のようなコードを書く人である。</div>
+</div>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span> <span class="k">struct</span> <span class="p">{</span>
+    <span class="kt">unsigned</span> <span class="kt">char</span> <span class="n">data1</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">data2</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">hoge_t</span><span class="p">;</span>
+
+<span class="n">hoge_t</span> <span class="n">hoge</span><span class="p">;</span>
+
+<span class="cm">/* UART通信などで受信したメッセージをローカルにコピーする */</span>
+<span class="kt">void</span> <span class="nf">getdata_frommessage</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">msg</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">memcpy</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hoge</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">hoge_t</span><span class="p">));</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">上記コードで、msgが5byteしかなく、それ以降に何のデータが入っているか不明な場合、</div>
+</div>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">hote</span><span class="p">.</span><span class="n">data2</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">には何が入るんでしょうかねえ</div>
+</div>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span> <span class="k">struct</span> <span class="p">{</span>
+    <span class="kt">unsigned</span> <span class="kt">char</span> <span class="n">data1</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">data2</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">hoge_t</span><span class="p">;</span>
+
+<span class="n">hoge_t</span> <span class="n">hoge</span><span class="p">;</span>
+
+<span class="cm">/* UART通信などで受信したメッセージをローカルにコピーする */</span>
+<span class="kt">void</span> <span class="nf">getdata_frommessage</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">msg</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">hoge</span><span class="p">.</span><span class="n">data1</span> <span class="o">=</span> <span class="n">msg</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+    <span class="n">hode</span><span class="p">.</span><span class="n">data2</span> <span class="o">=</span>
+        <span class="p">(</span><span class="kt">unsigned</span> <span class="kt">int</span><span class="p">)</span><span class="n">msg</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="mi">24</span> <span class="o">|</span>
+        <span class="p">(</span><span class="kt">unsigned</span> <span class="kt">int</span><span class="p">)</span><span class="n">msg</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="mi">16</span> <span class="o">|</span>
+        <span class="p">(</span><span class="kt">unsigned</span> <span class="kt">int</span><span class="p">)</span><span class="n">msg</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">&lt;&lt;</span>  <span class="mi">8</span> <span class="o">|</span>
+        <span class="p">(</span><span class="kt">unsigned</span> <span class="kt">int</span><span class="p">)</span><span class="n">msg</span><span class="p">[</span><span class="mi">4</span><span class="p">];</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">そういうわけで大体こういう書き方になる。</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+        </div>
+        <div class="sidebar">
+          
+          <h3>目次</h3>
+          <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../development_flow/index.html">開発の流れ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../glossary/index.html">用語集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../hard/index.html">ハード</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">ソフト</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tools/index.html">Tools</a></li>
+</ul>
+
+          <div role="search">
+            <h3 style="margin-top: 1.5em;">検索</h3>
+            <form class="search" action="../../search.html" method="get">
+                <input type="text" name="q" />
+                <input type="submit" value="検索" />
+            </form>
+          </div>
+
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          <div role="navigation" aria-label="related navigaton">
+            <a href="pragma.html" title="pragma"
+              >前へ</a> |
+            <a href="struct.html" title="struct(構造体)"
+              >次へ</a> |
+            <a href="../../genindex.html" title="総合索引"
+              >索引</a>
+          </div>
+          <div role="note" aria-label="source link">
+              <br/>
+              <a href="../../_sources/soft/coding/standard_library.rst.txt"
+                rel="nofollow">ソースコードを表示</a>
+          </div>
+        </div>
+
+        <div class="right">
+          
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, TCS_Himeji.
+      このドキュメントは <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.4 で生成しました。
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+  </body>
+</html>

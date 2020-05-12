@@ -1,0 +1,232 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <title>【PD】詳細設計 &#8212; KnowledgeOfEmbedded 0.0.1 ドキュメント</title>
+    <link rel="stylesheet" href="../../_static/agogo.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../_static/translations.js"></script>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="検索" href="../../search.html" />
+    <link rel="next" title="シーケンス図" href="sequence.html" />
+    <link rel="prev" title="DRBFM" href="../1-RA/drbfm.html" /> 
+  </head><body>
+    <div class="header-wrapper" role="banner">
+      <div class="header">
+        <div class="headertitle"><a
+          href="../../index.html">KnowledgeOfEmbedded 0.0.1 ドキュメント</a></div>
+        <div class="rel" role="navigation" aria-label="related navigation">
+          <a href="../1-RA/drbfm.html" title="DRBFM"
+             accesskey="P">前へ</a> |
+          <a href="sequence.html" title="シーケンス図"
+             accesskey="N">次へ</a> |
+          <a href="../../genindex.html" title="総合索引"
+             accesskey="I">索引</a>
+        </div>
+       </div>
+    </div>
+
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="document">
+            
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="pd">
+<span id="index-0"></span><span id="id1"></span><h1>【<code class="docutils literal notranslate"><span class="pre">PD</span></code>】詳細設計<a class="headerlink" href="#pd" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="line-block">
+<div class="line">仕様を洗い出し、ソースコードレベルでの変更点や条件の分岐の過不足を検討する。</div>
+</div>
+<div class="section" id="id2">
+<h2>概要<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="line-block">
+<div class="line">開発を担当する大抵の場合、直接指示が出て自席で作業するのはここからとなる。</div>
+<div class="line">渡された仕様書等から、指示された内容の実装方法を検討する。</div>
+<div class="line">その際に仕様の穴などがあれば確認をする。</div>
+</div>
+<blockquote>
+<div><div class="admonition note">
+<p class="admonition-title">注釈</p>
+<div class="line-block">
+<div class="line">( <a class="reference internal" href="../1-RA/drbfm.html#drbfm"><span class="std std-ref">DRBFM</span></a> を除けば)最も時間を要する工程である。</div>
+</div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="id3">
+<h2>内容<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="line-block">
+<div class="line">設計、開発を指示された場合、おそらく最初に取り掛かる項目である。</div>
+<div class="line">要求される仕様内容をソースに落とし込むには多くの検討事項がある。</div>
+<div class="line">その検討事項を如何に多く、隙間なくするかがバグを生まない仕事に繋がる。</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<div class="line-block">
+<div class="line">基本的にここに書かれている項目が必要なタイミングとは以下の2回である。</div>
+</div>
+<ul class="simple">
+<li><p>そもそもの開発時</p></li>
+<li><p>不具合が発生した時</p></li>
+</ul>
+<div class="line-block">
+<div class="line">その為、不具合が発生した時に <strong>知らない誰かが読み返して内容が分かる</strong> ものを作成する事を心掛ける。</div>
+</div>
+</div>
+</div>
+<div class="section" id="id4">
+<h2>作成方法<a class="headerlink" href="#id4" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="line-block">
+<div class="line">大抵Excelで作成する事になる。</div>
+<div class="line">ちゃんとしたドキュメントとしての体裁を整える場合、以下のような項目を作成する。</div>
+</div>
+<ol class="arabic">
+<li><dl class="simple">
+<dt><strong>表紙</strong></dt><dd><p>何についての設計書なのかを示し、必要なら認可した人のサインとドキュメント番号を記載する。</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><strong>変更履歴</strong></dt><dd><p>改版した場合、変更内容を記述する。</p>
+</dd>
+</dl>
+</li>
+<li><dl>
+<dt><strong>概要</strong></dt><dd><div class="line-block">
+<div class="line">何について書いてあるのかを書く。</div>
+<div class="line">大量の資料から探している時にここだけ見れば目的の資料かどうかを判断できるようにする為。</div>
+</div>
+</dd>
+</dl>
+</li>
+<li><dl>
+<dt><strong>参考文献</strong></dt><dd><div class="line-block">
+<div class="line">参考にした仕様書や設計書を書く。</div>
+<div class="line">特に重要なのはその版数であり、いつの仕様書に対して作成されたものなのかを書く。</div>
+<div class="line">これも後で探す時に判断しやすくするためである。</div>
+</div>
+</dd>
+</dl>
+</li>
+<li><dl>
+<dt><strong>要求仕様</strong></dt><dd><div class="line-block">
+<div class="line">仕様書から必要な個所だけ引っ張ってくる。</div>
+<div class="line">無くてもいいが、ふとした時に対応する版数の仕様書を探すのが非常に面倒な為あった方がいい。</div>
+</div>
+</dd>
+</dl>
+</li>
+<li><dl>
+<dt><strong>詳細設計</strong></dt><dd><div class="line-block">
+<div class="line">要求仕様を受けてどこをどう変更するのかを記述する。</div>
+<div class="line">母体がある場合は、以下を書くようにすると面倒が少ない。</div>
+</div>
+<ul class="simple">
+<li><p>母体の構造</p></li>
+<li><p>母体のどこに追加するのか</p></li>
+<li><p>関連する個所の一連の流れで変化する内容は何か</p></li>
+</ul>
+<div class="line-block">
+<div class="line">ソースコードレベルまで落とさなくてもいいが、</div>
+<div class="line">読めば落とし込めるレベルまでは記載する事。</div>
+<div class="line">また、この記述内容がそのまま <a class="reference internal" href="../5-IT/index.html#it"><span class="std std-ref">【IT】結合試験</span></a> で行う内容に直結する為、</div>
+<div class="line">どういう試験内容を行うべきかが想起できる様に記載する事。</div>
+<div class="line">その為にもまずは以下の項目を作成する事を念頭に入れる。</div>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="sequence.html">シーケンス図</a></li>
+<li class="toctree-l1"><a class="reference internal" href="state_transition_table.html">状態遷移表</a></li>
+</ul>
+</div>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<div class="line-block">
+<div class="line">図や表内に注釈がある場合は、欄外に書かずに直接吹き出しを挿入して記述する。</div>
+<div class="line">これは、後で読み返す必要が出た際に見やすい表や図だけを斜め読みし、細かい地の文を読み飛ばすからである。</div>
+<div class="line">大事な事や注意すべき事は必ず図中と関連付けて誰が見ても一目瞭然となるようにすること。</div>
+</div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">警告</p>
+<div class="line-block">
+<div class="line">この時点で検討できていない事 = ソースコードに反映できない事 = バグの素</div>
+<div class="line">である為、ここをしっかり行うことが大切である。</div>
+</div>
+</div>
+</dd>
+</dl>
+</li>
+</ol>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+        </div>
+        <div class="sidebar">
+          
+          <h3>目次</h3>
+          <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">開発の流れ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../glossary/index.html">用語集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../hard/index.html">ハード</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../soft/index.html">ソフト</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tools/index.html">Tools</a></li>
+</ul>
+
+          <div role="search">
+            <h3 style="margin-top: 1.5em;">検索</h3>
+            <form class="search" action="../../search.html" method="get">
+                <input type="text" name="q" />
+                <input type="submit" value="検索" />
+            </form>
+          </div>
+
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          <div role="navigation" aria-label="related navigaton">
+            <a href="../1-RA/drbfm.html" title="DRBFM"
+              >前へ</a> |
+            <a href="sequence.html" title="シーケンス図"
+              >次へ</a> |
+            <a href="../../genindex.html" title="総合索引"
+              >索引</a>
+          </div>
+          <div role="note" aria-label="source link">
+              <br/>
+              <a href="../../_sources/development_flow/2-PD/index.rst.txt"
+                rel="nofollow">ソースコードを表示</a>
+          </div>
+        </div>
+
+        <div class="right">
+          
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, TCS_Himeji.
+      このドキュメントは <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.4 で生成しました。
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+  </body>
+</html>

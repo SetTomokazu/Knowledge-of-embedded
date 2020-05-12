@@ -1,0 +1,148 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <title>bufferの使い方 &#8212; KnowledgeOfEmbedded 0.0.1 ドキュメント</title>
+    <link rel="stylesheet" href="../../_static/agogo.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../_static/translations.js"></script>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="検索" href="../../search.html" />
+    <link rel="next" title="DI" href="diei.html" />
+    <link rel="prev" title="bit演算" href="bit.html" /> 
+  </head><body>
+    <div class="header-wrapper" role="banner">
+      <div class="header">
+        <div class="headertitle"><a
+          href="../../index.html">KnowledgeOfEmbedded 0.0.1 ドキュメント</a></div>
+        <div class="rel" role="navigation" aria-label="related navigation">
+          <a href="bit.html" title="bit演算"
+             accesskey="P">前へ</a> |
+          <a href="diei.html" title="DI"
+             accesskey="N">次へ</a> |
+          <a href="../../genindex.html" title="総合索引"
+             accesskey="I">索引</a>
+        </div>
+       </div>
+    </div>
+
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="document">
+            
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="buffer">
+<span id="index-0"></span><span id="id1"></span><h1>bufferの使い方<a class="headerlink" href="#buffer" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="line-block">
+<div class="line">組み込みには限られた領域しかRAMが存在しない。</div>
+<div class="line">その為、用途毎にサイズの上限を定めることが多々ある。</div>
+<div class="line">これはmalloc等のRAM上のどこを使用するのか不明瞭な関数の使用を回避する目的もある。</div>
+</div>
+</div>
+<div class="section" id="ring-buffer">
+<span id="index-1"></span><span id="id2"></span><h1>ring buffer<a class="headerlink" href="#ring-buffer" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="line-block">
+<div class="line">循環バッファともいう。</div>
+<div class="line">延々と新しいものを保存し続ける際に使用する。つまりはログである。</div>
+<div class="line">大抵のログファイルは延々と文字列を長く詳しく書き、それを上から順番に追記していくが、</div>
+<div class="line">そんな領域は組み込みのRAMには存在しない。</div>
+<div class="line">その為、まずログ1つ分のサイズを一定に定める。</div>
+<div class="line">次にログを書き込み領域のサイズを定める。</div>
+<div class="line">そしてそこに上から順番に保存していき、一番最後まで行ったら先頭に戻ることを繰り返す。</div>
+<div class="line">その為管理用のバッファとして、どこまで書いたかとどこまで読んだかを保存する。</div>
+</div>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#define LOG_SIZE 8</span>
+<span class="cp">#define LOG_MAX 500</span>
+<span class="k">typedef</span> <span class="k">struct</span> <span class="p">{</span>
+    <span class="kt">unsigned</span> <span class="kt">char</span> <span class="n">data</span><span class="p">[</span><span class="n">LOG_SIZE</span><span class="p">];</span>
+<span class="p">}</span> <span class="n">log_t</span><span class="p">;</span>
+
+<span class="k">typedef</span> <span class="k">struct</span> <span class="p">{</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">read_point</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">write_point</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">ring_buffer_manager_t</span><span class="p">;</span>
+
+<span class="n">log_t</span> <span class="n">log</span><span class="p">[</span><span class="n">LOG_MAX</span><span class="p">];</span>
+<span class="n">ring_buffer_manager_t</span> <span class="n">manager</span><span class="p">;</span>
+
+<span class="kt">void</span> <span class="nf">write</span><span class="p">(</span><span class="n">log_t</span><span class="o">*</span> <span class="n">l</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">memcpy</span><span class="p">(</span><span class="o">&amp;</span><span class="n">log</span><span class="p">[</span><span class="n">manager</span><span class="p">.</span><span class="n">write_point</span><span class="p">],</span> <span class="n">l</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">log_t</span><span class="p">));</span>
+    <span class="n">manager</span><span class="p">.</span><span class="n">write_point</span><span class="o">++</span><span class="p">;</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">manager</span><span class="p">.</span><span class="n">write_point</span> <span class="o">&gt;=</span> <span class="n">LOG_MAX</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">manager</span><span class="p">.</span><span class="n">write_point</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+        </div>
+        <div class="sidebar">
+          
+          <h3>目次</h3>
+          <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../development_flow/index.html">開発の流れ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../glossary/index.html">用語集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../hard/index.html">ハード</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">ソフト</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tools/index.html">Tools</a></li>
+</ul>
+
+          <div role="search">
+            <h3 style="margin-top: 1.5em;">検索</h3>
+            <form class="search" action="../../search.html" method="get">
+                <input type="text" name="q" />
+                <input type="submit" value="検索" />
+            </form>
+          </div>
+
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          <div role="navigation" aria-label="related navigaton">
+            <a href="bit.html" title="bit演算"
+              >前へ</a> |
+            <a href="diei.html" title="DI"
+              >次へ</a> |
+            <a href="../../genindex.html" title="総合索引"
+              >索引</a>
+          </div>
+          <div role="note" aria-label="source link">
+              <br/>
+              <a href="../../_sources/soft/coding/buffer.rst.txt"
+                rel="nofollow">ソースコードを表示</a>
+          </div>
+        </div>
+
+        <div class="right">
+          
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, TCS_Himeji.
+      このドキュメントは <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.4 で生成しました。
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+  </body>
+</html>

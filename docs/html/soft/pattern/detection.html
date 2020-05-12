@@ -1,0 +1,165 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <title>検知手法 &#8212; KnowledgeOfEmbedded 0.0.1 ドキュメント</title>
+    <link rel="stylesheet" href="../../_static/agogo.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../_static/translations.js"></script>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="検索" href="../../search.html" />
+    <link rel="next" title="状態通知" href="notification.html" />
+    <link rel="prev" title="パターン" href="index.html" /> 
+  </head><body>
+    <div class="header-wrapper" role="banner">
+      <div class="header">
+        <div class="headertitle"><a
+          href="../../index.html">KnowledgeOfEmbedded 0.0.1 ドキュメント</a></div>
+        <div class="rel" role="navigation" aria-label="related navigation">
+          <a href="index.html" title="パターン"
+             accesskey="P">前へ</a> |
+          <a href="notification.html" title="状態通知"
+             accesskey="N">次へ</a> |
+          <a href="../../genindex.html" title="総合索引"
+             accesskey="I">索引</a>
+        </div>
+       </div>
+    </div>
+
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="document">
+            
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="id1">
+<span id="index-0"></span><span id="id2"></span><h1>検知手法<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="line-block">
+<div class="line">マイコンは基盤内外のデバイスから得られる情報を</div>
+<div class="line">検知し演算し対応する事が主なお仕事である。</div>
+<div class="line">その検知方法についてよく使用されるものを以下に示す。</div>
+</div>
+<div class="section" id="id3">
+<span id="index-1"></span><span id="id4"></span><h2>ポーリング<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="line-block">
+<div class="line">マイコンの端子状態を一定周期で監視し、異常となる値が一定回数連続すれば異常と判断する事。</div>
+<div class="line">基本的に <a class="reference internal" href="../../glossary/embedded.html#id7"><span class="std std-ref">チャタリング</span></a> 対策である。</div>
+<div class="line">値を確定するまでの時間の事を「チャタリング吸収時間」ともいう</div>
+<div class="line">大体ソースはこんな感じになる。</div>
+<div class="line">これはHighだけの検知だが、Low側も行う場合は現在の判定結果も保存しておく必要がある。</div>
+</div>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#define CHATTER_COUNT 3 </span><span class="cm">/* ポーリング回数 */</span><span class="cp"></span>
+<span class="cp">#define CHATTER_SPAN  5 </span><span class="cm">/* ポーリング間隔[ms] */</span><span class="cp"></span>
+
+<span class="kt">void</span> <span class="nf">detect</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
+    <span class="cm">/* ポーリング間隔で呼ばれる前提だと思ってください…… */</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">High</span> <span class="o">==</span> <span class="n">P_DET</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">count</span><span class="o">++</span><span class="p">;</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">CHATTER_COUNT</span> <span class="o">&lt;=</span> <span class="n">count</span><span class="p">)</span> <span class="p">{</span>
+            <span class="cm">/* 確定処理 */</span>
+        <span class="p">}</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="cm">/* そうでない場合カウントを初期化する */</span>
+        <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id5">
+<span id="index-2"></span><span id="id6"></span><h1>割り込み検知<a class="headerlink" href="#id5" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="line-block">
+<div class="line">割り込みを利用して検知を行う場合、以下の二種類がある。</div>
+</div>
+<ul class="simple">
+<li><p>マイコンのペリフェラルが提供する割り込み</p></li>
+<li><p>ただの端子の状態変化を割り込みで検知する</p></li>
+</ul>
+<div class="line-block">
+<div class="line">どちらも共通しているのは、以下の二つである。</div>
+</div>
+<ul class="simple">
+<li><p>基本的に割り込み関数内ではグローバルバッファに結果を格納するだけに留める。</p></li>
+<li><p>その機能や検知を行うタスクが動作する際にその結果を刈り取って制御を行う。</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<div class="line-block">
+<div class="line">ペリフェラルの割り込み検知にて、稀に見受けられるのが、</div>
+<div class="line">割り込み関数を登録せずにforループで処理の完了を待つものである。</div>
+<div class="line">これの目的はタイムアウトをきちんとソース上で制御する事と</div>
+<div class="line">マイコンを載せ替えたときに変更個所を少なくするためである。</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+        </div>
+        <div class="sidebar">
+          
+          <h3>目次</h3>
+          <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../development_flow/index.html">開発の流れ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../glossary/index.html">用語集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../hard/index.html">ハード</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">ソフト</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tools/index.html">Tools</a></li>
+</ul>
+
+          <div role="search">
+            <h3 style="margin-top: 1.5em;">検索</h3>
+            <form class="search" action="../../search.html" method="get">
+                <input type="text" name="q" />
+                <input type="submit" value="検索" />
+            </form>
+          </div>
+
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          <div role="navigation" aria-label="related navigaton">
+            <a href="index.html" title="パターン"
+              >前へ</a> |
+            <a href="notification.html" title="状態通知"
+              >次へ</a> |
+            <a href="../../genindex.html" title="総合索引"
+              >索引</a>
+          </div>
+          <div role="note" aria-label="source link">
+              <br/>
+              <a href="../../_sources/soft/pattern/detection.rst.txt"
+                rel="nofollow">ソースコードを表示</a>
+          </div>
+        </div>
+
+        <div class="right">
+          
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, TCS_Himeji.
+      このドキュメントは <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.4 で生成しました。
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+  </body>
+</html>

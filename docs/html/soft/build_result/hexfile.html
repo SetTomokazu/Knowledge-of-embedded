@@ -1,0 +1,189 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <title>HEXファイル &#8212; KnowledgeOfEmbedded 0.0.1 ドキュメント</title>
+    <link rel="stylesheet" href="../../_static/agogo.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../_static/translations.js"></script>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="検索" href="../../search.html" />
+    <link rel="next" title="MAPファイル" href="mapfile.html" />
+    <link rel="prev" title="ビルド出力物" href="index.html" /> 
+  </head><body>
+    <div class="header-wrapper" role="banner">
+      <div class="header">
+        <div class="headertitle"><a
+          href="../../index.html">KnowledgeOfEmbedded 0.0.1 ドキュメント</a></div>
+        <div class="rel" role="navigation" aria-label="related navigation">
+          <a href="index.html" title="ビルド出力物"
+             accesskey="P">前へ</a> |
+          <a href="mapfile.html" title="MAPファイル"
+             accesskey="N">次へ</a> |
+          <a href="../../genindex.html" title="総合索引"
+             accesskey="I">索引</a>
+        </div>
+       </div>
+    </div>
+
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="document">
+            
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="hex">
+<span id="index-0"></span><span id="id1"></span><h1>HEXファイル<a class="headerlink" href="#hex" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<p>組み込みソフトをビルドした際に出力されるHEXファイルについて説明する。</p>
+<div class="section" id="id2">
+<h2>概要<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="line-block">
+<div class="line">マイコンのROM上に書き込まれるソースコードのバイナリをASCIIキャラクタで記述したもの。</div>
+<div class="line">大抵実行用のバイナリファイルとセットで出力される。</div>
+<div class="line">されない場合でもほぼ必ずどこかに出力するようにする設定項目がある</div>
+<div class="line">モトローラファイルともいう。</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<div class="line-block">
+<div class="line">拡張子が.hexとは限らないので、見当たらない場合ビルド生成物を漁る必要がある。</div>
+<div class="line">見たことがある拡張子は以下の通りである。</div>
+</div>
+<ul class="simple">
+<li><p>.mot(モトローラファイルの頭だろう)</p></li>
+<li><p>.mhx(モトローラHEXファイル？)</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="id3">
+<h2>内部構造<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="line-block">
+<div class="line">全部ここに載ってるので参照</div>
+<div class="line">載っていないデータがあってもフォーマットを見ていると意味は類察できる</div>
+<div class="line"><a class="reference external" href="http://www.geocities.jp/chako_ratta/micon/s_format.html">HEXファイルフォーマット解説</a></div>
+</div>
+</div>
+<div class="section" id="id5">
+<h2>用途<a class="headerlink" href="#id5" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="line-block">
+<div class="line">開発しているソフトのバージョンアップファイルを作成する際にソースとして使用するのがこのHEXファイルとなる。</div>
+<div class="line">理由として以下が挙げられる。</div>
+</div>
+<ul class="simple">
+<li><p>ビルド結果の実行ファイル、ABSファイルそのものはファイル名やアドレスの記述方式がマイコン毎に千差万別である上にバイナリファイルである為解析に時間がかかる</p></li>
+<li><p>HEXファイルの出力設定を編集することでROMに書かれる全領域のデータをそのまま取得できる</p></li>
+<li><p>どのマイコンであっても上記内部構造を知っているだけで作成できる</p></li>
+</ul>
+<div class="line-block">
+<div class="line">つまりは一番分かり易く汎用性がある生成物の為、これを基にツールが作成できれば非常に重用されることになる。</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<div class="line-block">
+<div class="line">大抵初期設定では、関数やテーブルといった中身が詰まっている個所のみを出力するようになっている。</div>
+<div class="line">そのため、全て埋めたバイナリのフルデータを作成する場合は、ハードウェアマニュアルを見て空き領域の初期値は０なのか0xFFなのかを知る必要がある。</div>
+<div class="line">また、ビルド時にHEXファイル出力用引数が渡せるのであればその時点で中実なHEXファイルを出力するように設定する。</div>
+<div class="line">開発環境を新規構築した際に3番目くらいに確認するべき項目である。</div>
+</div>
+</div>
+</div>
+<div class="section" id="id6">
+<h2>解析<a class="headerlink" href="#id6" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>Pythonが使えるならば解析は大体こんな感じで作っていくのではないか</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">hexfile</span> <span class="o">=</span> <span class="s2">&quot;target.hex&quot;</span> <span class="c1"># 解析するHEXファイル</span>
+
+<span class="k">def</span> <span class="nf">get_detail</span><span class="p">(</span><span class="n">line</span><span class="p">):</span>
+    <span class="c1"># レコードタイプとデータサイズ、データを返す</span>
+    <span class="k">return</span> <span class="n">line</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">],</span> <span class="nb">int</span><span class="p">(</span><span class="n">line</span><span class="p">[</span><span class="mi">2</span><span class="p">:</span><span class="mi">4</span><span class="p">],</span> <span class="mi">16</span><span class="p">),</span> <span class="n">line</span><span class="p">[</span><span class="mi">4</span><span class="p">:</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span>
+
+<span class="k">def</span> <span class="nf">get_filename</span><span class="p">(</span><span class="nb">type</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+    <span class="k">if</span><span class="p">(</span><span class="nb">type</span> <span class="o">!=</span> <span class="s1">&#39;S0&#39;</span><span class="p">)</span> <span class="k">return</span>
+    <span class="c1"># S0レコードの処理</span>
+
+<span class="c1"># 以下各レコードの処理記述</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">hexfile</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">hf</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">hf</span><span class="p">:</span>
+        <span class="n">r</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">d</span> <span class="o">=</span> <span class="n">get_detail</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">r</span> <span class="o">==</span> <span class="s1">&#39;S0&#39;</span><span class="p">):</span>
+            <span class="c1"># S0レコードの処理実行</span>
+            <span class="n">get_filename</span><span class="p">(</span><span class="n">r</span><span class="p">,</span><span class="n">s</span><span class="p">,</span><span class="n">d</span><span class="p">)</span>
+        <span class="k">elif</span><span class="p">(</span><span class="n">r</span> <span class="o">==</span> <span class="s1">&#39;S1&#39;</span><span class="p">):</span>
+            <span class="c1"># S1レコードの処理</span>
+        <span class="c1">#以下同様に分岐</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">pass</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+        </div>
+        <div class="sidebar">
+          
+          <h3>目次</h3>
+          <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../development_flow/index.html">開発の流れ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../glossary/index.html">用語集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../hard/index.html">ハード</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">ソフト</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tools/index.html">Tools</a></li>
+</ul>
+
+          <div role="search">
+            <h3 style="margin-top: 1.5em;">検索</h3>
+            <form class="search" action="../../search.html" method="get">
+                <input type="text" name="q" />
+                <input type="submit" value="検索" />
+            </form>
+          </div>
+
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          <div role="navigation" aria-label="related navigaton">
+            <a href="index.html" title="ビルド出力物"
+              >前へ</a> |
+            <a href="mapfile.html" title="MAPファイル"
+              >次へ</a> |
+            <a href="../../genindex.html" title="総合索引"
+              >索引</a>
+          </div>
+          <div role="note" aria-label="source link">
+              <br/>
+              <a href="../../_sources/soft/build_result/hexfile.rst.txt"
+                rel="nofollow">ソースコードを表示</a>
+          </div>
+        </div>
+
+        <div class="right">
+          
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, TCS_Himeji.
+      このドキュメントは <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.4 で生成しました。
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+  </body>
+</html>

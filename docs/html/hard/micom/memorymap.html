@@ -1,0 +1,146 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <title>Memory Map &#8212; KnowledgeOfEmbedded 0.0.1 ドキュメント</title>
+    <link rel="stylesheet" href="../../_static/agogo.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../_static/translations.js"></script>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="検索" href="../../search.html" />
+    <link rel="next" title="Clock" href="clock/index.html" />
+    <link rel="prev" title="マイコン" href="index.html" /> 
+  </head><body>
+    <div class="header-wrapper" role="banner">
+      <div class="header">
+        <div class="headertitle"><a
+          href="../../index.html">KnowledgeOfEmbedded 0.0.1 ドキュメント</a></div>
+        <div class="rel" role="navigation" aria-label="related navigation">
+          <a href="index.html" title="マイコン"
+             accesskey="P">前へ</a> |
+          <a href="clock/index.html" title="Clock"
+             accesskey="N">次へ</a> |
+          <a href="../../genindex.html" title="総合索引"
+             accesskey="I">索引</a>
+        </div>
+       </div>
+    </div>
+
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="document">
+            
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="memory-map">
+<span id="index-0"></span><span id="id1"></span><h1>Memory Map<a class="headerlink" href="#memory-map" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="line-block">
+<div class="line">マイコンにはそのビット数で把握できるMemory Mapが存在する。</div>
+<div class="line">マイコンでアクセスできる領域は大別して以下の通りである。</div>
+<div class="line">それ以外は予約領域である。</div>
+</div>
+<div class="section" id="rom">
+<span id="index-1"></span><span id="id2"></span><h2>ROM<a class="headerlink" href="#rom" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="line-block">
+<div class="line">Read Only Memoryの略</div>
+<div class="line">ソースコードやテーブルがここに置かれる。</div>
+<div class="line">大抵 <a class="reference internal" href="flash/index.html#flash"><span class="std std-ref">FLASH</span></a> で構成されている。</div>
+</div>
+</div>
+<div class="section" id="ram">
+<span id="index-2"></span><span id="id3"></span><h2>RAM<a class="headerlink" href="#ram" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="line-block">
+<div class="line">Random Access Memoryの略</div>
+<div class="line">バッファがここに置かれる。</div>
+<div class="line">電源が落とされるとデータは消失するか不定になるため、使い始める際には必ず初期化する。</div>
+<div class="line">マイコンの低電力消費モードを使用する場合は、使用しているRAMがデータを保持するかどうかを確認する事</div>
+<div class="line">ここで次回も使用したいデータは <a class="reference internal" href="../device/eeprom.html#eeprom"><span class="std std-ref">EEPROM</span></a> 等に保存する。</div>
+</div>
+</div>
+<div class="section" id="i-o">
+<span id="io"></span><span id="index-3"></span><h2>I/O領域<a class="headerlink" href="#i-o" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="line-block">
+<div class="line">レジスタが集まっているところ</div>
+</div>
+</div>
+</div>
+<div class="section" id="reserved">
+<span id="index-4"></span><span id="id4"></span><h1>Reserved<a class="headerlink" href="#reserved" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="line-block">
+<div class="line">予約領域</div>
+<div class="line">予約と聞くと何か実装予定なのかなとか思うけどそんなことは無い</div>
+<div class="line">「 <strong>予</strong> めマイコン自身が使うことが <strong>約</strong> 束されてるからお前ら使うなよ」</div>
+<div class="line">という領域である。</div>
+<div class="line">ここにアクセスしたら <a class="reference internal" href="interrupt/index.html#id5"><span class="std std-ref">例外</span></a> が発生する。</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+        </div>
+        <div class="sidebar">
+          
+          <h3>目次</h3>
+          <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../development_flow/index.html">開発の流れ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../glossary/index.html">用語集</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">ハード</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../soft/index.html">ソフト</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tools/index.html">Tools</a></li>
+</ul>
+
+          <div role="search">
+            <h3 style="margin-top: 1.5em;">検索</h3>
+            <form class="search" action="../../search.html" method="get">
+                <input type="text" name="q" />
+                <input type="submit" value="検索" />
+            </form>
+          </div>
+
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          <div role="navigation" aria-label="related navigaton">
+            <a href="index.html" title="マイコン"
+              >前へ</a> |
+            <a href="clock/index.html" title="Clock"
+              >次へ</a> |
+            <a href="../../genindex.html" title="総合索引"
+              >索引</a>
+          </div>
+          <div role="note" aria-label="source link">
+              <br/>
+              <a href="../../_sources/hard/micom/memorymap.rst.txt"
+                rel="nofollow">ソースコードを表示</a>
+          </div>
+        </div>
+
+        <div class="right">
+          
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, TCS_Himeji.
+      このドキュメントは <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.4 で生成しました。
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+  </body>
+</html>

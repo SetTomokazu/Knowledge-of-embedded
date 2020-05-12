@@ -1,0 +1,213 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <title>型 &#8212; KnowledgeOfEmbedded 0.0.1 ドキュメント</title>
+    <link rel="stylesheet" href="../../_static/agogo.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../_static/translations.js"></script>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="検索" href="../../search.html" />
+    <link rel="next" title="union(共用体)" href="union.html" />
+    <link rel="prev" title="switch" href="switch.html" /> 
+  </head><body>
+    <div class="header-wrapper" role="banner">
+      <div class="header">
+        <div class="headertitle"><a
+          href="../../index.html">KnowledgeOfEmbedded 0.0.1 ドキュメント</a></div>
+        <div class="rel" role="navigation" aria-label="related navigation">
+          <a href="switch.html" title="switch"
+             accesskey="P">前へ</a> |
+          <a href="union.html" title="union(共用体)"
+             accesskey="N">次へ</a> |
+          <a href="../../genindex.html" title="総合索引"
+             accesskey="I">索引</a>
+        </div>
+       </div>
+    </div>
+
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="document">
+            
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="id1">
+<span id="index-0"></span><span id="id2"></span><h1>型<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<p>組み込みで使用されるC言語の型について</p>
+<div class="section" id="id3">
+<h2>概要<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="line-block">
+<div class="line">組み込みで使用するC言語の型は一定の書式がある為、見慣れないうちは戸惑うと思われる。</div>
+<div class="line">ここではその一覧とそうなっている理由について記述する。</div>
+</div>
+<div class="section" id="typedef">
+<h3>必ずtypedefされた型を使用する<a class="headerlink" href="#typedef" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="line-block">
+<div class="line">全てのソースコードが参照するヘッダ内に、下記のような使用する型のtypedefが並んでいるはずである。</div>
+</div>
+<div class="highlight-c notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">typedef</span> <span class="kt">unsigned</span> <span class="kt">char</span>   <span class="n">uint8</span><span class="p">;</span>  <span class="cm">/* uchar, BYTEとも */</span>
+<span class="k">typedef</span> <span class="kt">unsigned</span> <span class="kt">short</span>  <span class="n">uint16</span><span class="p">;</span> <span class="cm">/* ushort, WORD, HWORDとも */</span>
+<span class="k">typedef</span> <span class="kt">unsigned</span> <span class="kt">int</span>    <span class="n">uint32</span><span class="p">;</span> <span class="cm">/* uint, DWORD, WORDとも */</span>
+<span class="k">typedef</span> <span class="kt">unsigned</span> <span class="kt">long</span>   <span class="n">uint64</span><span class="p">;</span> <span class="cm">/* ulongとも */</span>
+<span class="k">typedef</span> <span class="kt">signed</span> <span class="kt">char</span>     <span class="n">int8</span><span class="p">;</span>
+<span class="k">typedef</span> <span class="kt">signed</span> <span class="kt">short</span>    <span class="n">int16</span><span class="p">;</span>
+<span class="k">typedef</span> <span class="kt">signed</span> <span class="kt">int</span>      <span class="n">int32</span><span class="p">;</span>
+<span class="k">typedef</span> <span class="kt">signed</span> <span class="kt">long</span>     <span class="n">int64</span><span class="p">;</span>
+</pre></div>
+</td></tr></table></div>
+<div class="line-block">
+<div class="line">マイコンには命令のbit数があり、使用するint型が必ずしも32bitではない為である。</div>
+<div class="line">その為、マイコンを載せ替えても動作するようにこのtypedefで差分を吸収する。</div>
+<div class="line">実際静的解析でもC言語の基本の型を直接使用していると警告が出る。</div>
+<div class="line">またマイコンのマニュアルでも表現方法が他のマイコンと異なる場合が多々ある。</div>
+<div class="line">コード中のWORD、HWORD(HALF WORD)、DWORD(DOUBLE WORD)はその最たる例である。</div>
+<div class="line">以下はその説明である。</div>
+</div>
+<table class="docutils align-default" id="id9">
+<caption><span class="caption-text">マイコンマニュアル上の型付け</span><a class="headerlink" href="#id9" title="このテーブルへのパーマリンク">¶</a></caption>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>マイコン</p></th>
+<th class="head"><p>2Byte</p></th>
+<th class="head"><p>4Byte</p></th>
+<th class="head"><p>注釈</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>A</p></td>
+<td><p>WORD</p></td>
+<td><p>DWORD</p></td>
+<td><p>WORDが2バイトなのでその2倍としてDOUBLE WORD</p></td>
+</tr>
+<tr class="row-odd"><td><p>B</p></td>
+<td><p>HWORD</p></td>
+<td><p>WORD</p></td>
+<td><p>WORDが4バイトなのでその半分としてHALF WORD</p></td>
+</tr>
+</tbody>
+</table>
+<div class="line-block">
+<div class="line">上記のような表記揺れがある為、マイコンが変わった時はどの型がどのサイズになるのかを把握する事。</div>
+</div>
+</div>
+<div class="section" id="signed">
+<h3>基本的にsignedは使用しない<a class="headerlink" href="#signed" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="line-block">
+<div class="line">マイコン上で行われる演算には基本的に負の値を使用しない。</div>
+<div class="line">理由はぱっとあげて以下のようなものがある。</div>
+</div>
+<ul class="simple">
+<li><p>単純な制御には基本的に負の値を使用しない。</p></li>
+<li><p>通信に乗せるデータはバイナリ値であり、そのまま取得するとunsignedである。</p></li>
+<li><p>ビットシフトやキャストを行った際に、 <strong>マイコンによって最上位ビットの扱いが変わる</strong> 。</p></li>
+</ul>
+</div>
+<div class="section" id="id4">
+<h3>基本的に浮動小数点は使用しない<a class="headerlink" href="#id4" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="line-block">
+<div class="line">マイコン上で行われる演算には基本的に浮動小数点を使用しない。</div>
+<div class="line">理由はぱっとあげて以下のようなものがある。</div>
+</div>
+<ul class="simple">
+<li><dl class="simple">
+<dt>マイコンのレジスタから取得できるデータはバイナリ値である。</dt><dd><p>たとえ使用していてもレジスタを介す保存、取得、通信時には別のバイナリ列に変換される。</p>
+</dd>
+</dl>
+</li>
+<li><p>単純な制御では小数点以下の演算結果が不要である <a class="footnote-reference brackets" href="#id7" id="id5">1</a> 。</p></li>
+<li><p>浮動小数点演算は通常の演算に比べ非常に時間がかかる <a class="footnote-reference brackets" href="#id8" id="id6">2</a> 。</p></li>
+</ul>
+<dl class="footnote brackets">
+<dt class="label" id="id7"><span class="brackets"><a class="fn-backref" href="#id5">1</a></span></dt>
+<dd><p>そもそも浮動小数点を使用しなさいと明記がある仕様を見た事が無い。</p>
+</dd>
+<dt class="label" id="id8"><span class="brackets"><a class="fn-backref" href="#id6">2</a></span></dt>
+<dd><p>浮動小数点演算用回路(FPU等)を搭載しているとそれなりにマシになる、が、遅いものは遅い。そもそもあるかどうかもマイコン依存である。</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+        </div>
+        <div class="sidebar">
+          
+          <h3>目次</h3>
+          <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../development_flow/index.html">開発の流れ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../glossary/index.html">用語集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../hard/index.html">ハード</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">ソフト</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tools/index.html">Tools</a></li>
+</ul>
+
+          <div role="search">
+            <h3 style="margin-top: 1.5em;">検索</h3>
+            <form class="search" action="../../search.html" method="get">
+                <input type="text" name="q" />
+                <input type="submit" value="検索" />
+            </form>
+          </div>
+
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          <div role="navigation" aria-label="related navigaton">
+            <a href="switch.html" title="switch"
+              >前へ</a> |
+            <a href="union.html" title="union(共用体)"
+              >次へ</a> |
+            <a href="../../genindex.html" title="総合索引"
+              >索引</a>
+          </div>
+          <div role="note" aria-label="source link">
+              <br/>
+              <a href="../../_sources/soft/coding/type.rst.txt"
+                rel="nofollow">ソースコードを表示</a>
+          </div>
+        </div>
+
+        <div class="right">
+          
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, TCS_Himeji.
+      このドキュメントは <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.4 で生成しました。
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+  </body>
+</html>
