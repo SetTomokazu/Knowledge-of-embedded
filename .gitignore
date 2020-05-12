@@ -1,4 +1,7 @@
+### VS Code ###
+.vscode/
 _*
 .DS_Store
 *.zip
 *.exe
+build

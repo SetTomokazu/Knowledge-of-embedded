@@ -1,0 +1,27 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+sphinx-autobuild = "*"
+autopep8 = "*"
+flake8 = "*"
+
+[packages]
+sphinx = "*"
+pillow = "*"
+sphinxcontrib-openapi = "*"
+sphinxcontrib-blockdiag = "*"
+sphinxcontrib-seqdiag = "*"
+sphinxcontrib-actdiag = "*"
+sphinxcontrib-nwdiag = "*"
+sphinxcontrib-plantuml = "*"
+javasphinx = "*"
+
+[requires]
+python_version = "3.8"
+
+[scripts]
+build = "sphinx-build -M html source build"
+auto_build = "sphinx-autobuild -b html source build/html"
