@@ -35,7 +35,8 @@ extensions = [
     "sphinxcontrib.actdiag",
     "sphinxcontrib.nwdiag",
     "sphinxcontrib.rackdiag",
-    "sphinxcontrib.packetdiag"
+    "sphinxcontrib.packetdiag",
+    "sphinx.ext.githubpages"
     ]
 
 image_format = 'SVG'

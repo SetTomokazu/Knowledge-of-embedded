@@ -18,6 +18,7 @@ sphinxcontrib-actdiag = "*"
 sphinxcontrib-nwdiag = "*"
 sphinxcontrib-plantuml = "*"
 javasphinx = "*"
+sphinx-ext-githubpages = "*"
 
 [requires]
 python_version = "3.8"
